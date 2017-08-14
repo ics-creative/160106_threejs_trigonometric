@@ -4,7 +4,7 @@ window.addEventListener('load', init);
 
 function init() {
   /** 主要都市一覧 **/
-  let cities = [];
+  const cities = [];
 
   /** 主要都市緯度経度一覧 **/
   const citiesPoints = [
@@ -20,36 +20,37 @@ function init() {
   ];
 
   // シーン
-  let scene = new THREE.Scene();
+  const scene = new THREE.Scene();
 
   // カメラ
-  let camera = new THREE.PerspectiveCamera(
-      45, window.innerWidth / window.innerHeight, 1, 2000
+  const camera = new THREE.PerspectiveCamera(
+    45, window.innerWidth / window.innerHeight, 1, 2000
   );
   camera.position.set(-250, 0, -250);
   camera.lookAt(new THREE.Vector3(0, 0, 0));
 
   // レンダラー
-  let renderer = new THREE.WebGLRenderer({antialias: true});
+  const renderer = new THREE.WebGLRenderer({antialias: true});
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
   // カメラコントローラー
-  let controller         = new THREE.TrackballControls(camera, renderer.domElement);
+  const controller       = new THREE.TrackballControls(camera, renderer.domElement);
   controller.noPan       = true;
   controller.minDistance = 200;
   controller.maxDistance = 1000;
 
   // 地球
-  let earth = createEarth();
+  const earth = createEarth();
   scene.add(earth);
 
   // リスト分のポイントをプロット
   for (let i = 0; i < citiesPoints.length; i++) {
-    let latitude: number  = citiesPoints[i][0];
-    let longitude: number = citiesPoints[i][1];
+    const latitude: number  = citiesPoints[i][0];
+    const longitude: number = citiesPoints[i][1];
+
     // ポイント
-    let point             = createPoint(i == 0 ? 0xff0000 : latitude == 90 ? 0x0000FF : 0x00FF00, latitude, longitude);
+    const point = createPoint(i == 0 ? 0xff0000 : latitude == 90 ? 0x0000FF : 0x00FF00, latitude, longitude);
     scene.add(point);
     cities.push(point);
   }
@@ -73,12 +74,12 @@ function init() {
  */
 function createEarth(): THREE.Mesh {
   // 球
-  let texture = THREE.ImageUtils.loadTexture('img/ground.jpg');
-  let ground  = new THREE.Mesh(
-      new THREE.SphereGeometry(100, 20, 20),
-      new THREE.MeshBasicMaterial({map: texture}));
+  const texture = THREE.ImageUtils.loadTexture('img/ground.jpg');
+  const mesh    = new THREE.Mesh(
+    new THREE.SphereGeometry(100, 20, 20),
+    new THREE.MeshBasicMaterial({map: texture}));
 
-  return ground;
+  return mesh;
 }
 
 /**
@@ -90,9 +91,9 @@ function createEarth(): THREE.Mesh {
  */
 function createPoint(color: number, latitude: number = 0, longitude: number = 0): THREE.Mesh {
   // 球
-  let sphere = new THREE.Mesh(
-      new THREE.SphereGeometry(2),
-      new THREE.MeshBasicMaterial({color: color}));
+  const sphere = new THREE.Mesh(
+    new THREE.SphereGeometry(2),
+    new THREE.MeshBasicMaterial({color: color}));
 
   // 緯度経度から位置を設定
   sphere.position.copy(translateGeoCoords(latitude, longitude, 100));
@@ -110,13 +111,13 @@ function createPoint(color: number, latitude: number = 0, longitude: number = 0)
  */
 function translateGeoCoords(latitude: number, longitude: number, radius: number): THREE.Vector3 {
   // 仰角
-  let phi   = (latitude) * Math.PI / 180;
+  const phi   = (latitude) * Math.PI / 180;
   // 方位角
-  let theta = (longitude - 180) * Math.PI / 180;
+  const theta = (longitude - 180) * Math.PI / 180;
 
-  let x = -(radius) * Math.cos(phi) * Math.cos(theta);
-  let y = (radius) * Math.sin(phi);
-  let z = (radius) * Math.cos(phi) * Math.sin(theta);
+  const x = -(radius) * Math.cos(phi) * Math.cos(theta);
+  const y = (radius) * Math.sin(phi);
+  const z = (radius) * Math.cos(phi) * Math.sin(theta);
 
   return new THREE.Vector3(x, y, z);
 }
