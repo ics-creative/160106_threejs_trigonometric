@@ -1,6 +1,6 @@
 ///<reference path="../../typings/tsd.d.ts" />
 
-window.addEventListener("load", init);
+window.addEventListener('load', init);
 
 function init() {
 
@@ -32,8 +32,8 @@ function init() {
   document.body.appendChild(renderer.domElement);
 
   // カメラコントローラー
-  let controller = new THREE.TrackballControls(camera, renderer.domElement);
-  controller.noPan = true;
+  let controller         = new THREE.TrackballControls(camera, renderer.domElement);
+  controller.noPan       = true;
   controller.minDistance = 200;
   controller.maxDistance = 1000;
 
@@ -47,10 +47,10 @@ function init() {
 
   // リスト分のポイントをプロット
   for (let i = 0; i < citiesPoints.length; i++) {
-    let latitude:number = citiesPoints[i][0];
-    let longitude:number = citiesPoints[i][1];
+    let latitude: number  = citiesPoints[i][0];
+    let longitude: number = citiesPoints[i][1];
     // ポイント
-    let point = createPoint(latitude == 90 ? 0x0000FF : 0x00FF00, latitude, longitude);
+    let point             = createPoint(latitude == 90 ? 0x0000FF : 0x00FF00, latitude, longitude);
     scene.add(point);
     // 線
     let line = createLine(japan.position, point.position);
@@ -75,10 +75,10 @@ function init() {
  * 地球を生成します
  * @returns {THREE.Mesh} 球
  */
-function createEarth():THREE.Mesh {
+function createEarth(): THREE.Mesh {
   // 球
-  let texture = THREE.ImageUtils.loadTexture("img/ground.jpg");
-  let ground = new THREE.Mesh(
+  let texture = THREE.ImageUtils.loadTexture('img/ground.jpg');
+  let ground  = new THREE.Mesh(
     new THREE.SphereGeometry(100, 20, 20),
     new THREE.MeshBasicMaterial({map: texture}));
 
@@ -93,7 +93,7 @@ function createEarth():THREE.Mesh {
  * @param {number} longitude
  * @returns {THREE.Mesh} 球
  */
-function createPoint(color:number, latitude:number = 0, longitude:number = 0):THREE.Mesh {
+function createPoint(color: number, latitude: number = 0, longitude: number = 0): THREE.Mesh {
   // 球
   let sphere = new THREE.Mesh(
     new THREE.SphereGeometry(2),
@@ -112,11 +112,11 @@ function createPoint(color:number, latitude:number = 0, longitude:number = 0):TH
  * @param {THREE.Vector3} endPoint 終了点
  * @returns {THREE.Line} 線
  */
-function createLine(startPoint:THREE.Vector3, endPoint:THREE.Vector3):THREE.Line {
+function createLine(startPoint: THREE.Vector3, endPoint: THREE.Vector3): THREE.Line {
   // 線
-  let geometry = new THREE.Geometry();
+  let geometry      = new THREE.Geometry();
   geometry.vertices = getOrbitPoints(startPoint, endPoint, 15);
-  let line = new THREE.Line(geometry, new THREE.LineBasicMaterial({linewidth: 5, color: 0x00ffff}));
+  let line          = new THREE.Line(geometry, new THREE.LineBasicMaterial({linewidth: 5, color: 0x00ffff}));
 
   return line;
 }
@@ -129,9 +129,9 @@ function createLine(startPoint:THREE.Vector3, endPoint:THREE.Vector3):THREE.Line
  * @param {number} radius 半径
  * @returns {THREE.Vector3} 位置
  */
-function translateGeoCoords(latitude:number, longitude:number, radius:number):THREE.Vector3 {
+function translateGeoCoords(latitude: number, longitude: number, radius: number): THREE.Vector3 {
   // 仰角
-  let phi = (latitude) * Math.PI / 180;
+  let phi   = (latitude) * Math.PI / 180;
   // 方位角
   let theta = (longitude - 180) * Math.PI / 180;
 
@@ -150,12 +150,12 @@ function translateGeoCoords(latitude:number, longitude:number, radius:number):TH
  * @param {number} segmentNum 頂点の数 (線のなめらかさ)
  * @returns {THREE.Vector3[]} 軌跡座標の配列
  */
-function getOrbitPoints(startPos:THREE.Vector3, endPos:THREE.Vector3, segmentNum:number):THREE.Vector3[] {
+function getOrbitPoints(startPos: THREE.Vector3, endPos: THREE.Vector3, segmentNum: number): THREE.Vector3[] {
   // 頂点を格納する配列
   let vertices = [];
 
   let startVec = startPos.clone();
-  let endVec = endPos.clone();
+  let endVec   = endPos.clone();
 
   // ２つのベクトルの回転軸
   let axis = startVec.clone().cross(endVec);
