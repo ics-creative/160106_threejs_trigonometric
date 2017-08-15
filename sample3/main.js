@@ -14,19 +14,24 @@ function init() {
   ];
   // シーン
   const scene = new THREE.Scene();
+
   // カメラ
   const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 2000);
   camera.position.set(-250, 0, -250);
   camera.lookAt(new THREE.Vector3(0, 0, 0));
+
   // レンダラー
   const renderer = new THREE.WebGLRenderer({antialias: true});
+  renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
+
   // カメラコントローラー
   const controller = new THREE.TrackballControls(camera, renderer.domElement);
   controller.noPan = true;
   controller.minDistance = 200;
   controller.maxDistance = 1000;
+  
   // 地球
   const earth = createEarth();
   scene.add(earth);
@@ -64,7 +69,7 @@ function init() {
  */
 function createEarth() {
   // 球
-  const texture = new THREE.TextureLoader.load('img/ground.jpg');
+  const texture = (new THREE.TextureLoader).load('img/ground.jpg');
   return new THREE.Mesh(
     new THREE.SphereGeometry(100, 40, 40),
     new THREE.MeshBasicMaterial({map: texture}));
@@ -105,11 +110,11 @@ function createLine(startPoint, endPoint) {
 }
 
 /**
- * 緯度経度から位置を算出します
- * @param {number} latitude 緯度
- * @param {number} longitude 経度
- * @param {number} radius 半径
- * @returns {THREE.Vector3} 位置
+ * 緯度経度から位置を算出します。
+ * @param {number} latitude 緯度です。
+ * @param {number} longitude 経度です。
+ * @param {number} radius 半径です。
+ * @returns {Vector3} 3Dの座標です。
  * @see https://ics.media/entry/10657
  */
 function translateGeoCoords(latitude, longitude, radius) {
@@ -126,11 +131,11 @@ function translateGeoCoords(latitude, longitude, radius) {
 }
 
 /**
- * 軌道の座標を配列で返します
- * @param {THREE.Vector3} startPos 開始点
- * @param {THREE.Vector3} endPos 終了点
- * @param {number} segmentNum 頂点の数 (線のなめらかさ)
- * @returns {THREE.Vector3[]} 軌跡座標の配列
+ * 軌道の座標を配列で返します。
+ * @param {Vector3} startPos 開始点です。
+ * @param {Vector3} endPos 終了点です。
+ * @param {number} segmentNum セグメント分割数です。
+ * @returns {Vector3[]} 軌跡座標の配列です。
  * @see https://ics.media/entry/10657
  */
 function getOrbitPoints(startPos, endPos, segmentNum) {

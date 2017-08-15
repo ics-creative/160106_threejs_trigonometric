@@ -26,6 +26,7 @@ function init() {
 
   // レンダラー
   const renderer = new THREE.WebGLRenderer({antialias: true});
+  renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
@@ -94,12 +95,13 @@ function createPoint(color, latitude = 0, longitude = 0) {
   return sphere;
 }
 
+
 /**
- * 緯度経度から位置を算出します
- * @param {number} latitude 緯度
- * @param {number} longitude 経度
- * @param {number} radius 半径
- * @returns {THREE.Vector3} 位置
+ * 緯度経度から位置を算出します。
+ * @param {number} latitude 緯度です。
+ * @param {number} longitude 経度です。
+ * @param {number} radius 半径です。
+ * @returns {Vector3} 3Dの座標です。
  * @see https://ics.media/entry/10657
  */
 function translateGeoCoords(latitude, longitude, radius) {
