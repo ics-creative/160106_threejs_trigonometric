@@ -1,11 +1,14 @@
 import * as THREE from 'three';
-import {CityPoint} from './CityPoint';
-import {GeoUtil} from '../utils/GeoUtil';
+import CityPoint from './CityPoint';
+import GeoUtil from '../utils/GeoUtil';
 
 /**
- * ポイントを結ぶ線分クラス
+ * ポイントを結ぶ線分の表示クラスです。
+ *
+ * @author ICS
+ * @see https://ics.media/entry/10657
  */
-export class CityLine extends THREE.Group {
+export default class CityLine extends THREE.Group {
 
   /** 線 **/
   private _line: THREE.Line;

@@ -2,10 +2,15 @@ import * as THREE from 'three';
 
 /**
  * 地球の緯度経度などの計算に利用するユーティリティクラスです。
+ *
  * @author ICS
+ * @see https://ics.media/entry/10657
  */
-export class GeoUtil {
+export default class GeoUtil {
 
+  /**
+   * @private
+   */
   constructor() {
     throw new Error();
   }

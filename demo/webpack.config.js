@@ -41,11 +41,13 @@ module.exports = {
 
 
   plugins: [
+    new webpack.optimize.ModuleConcatenationPlugin(),
+
     // JSファイルのminifyを実行する
-//    new webpack.optimize.UglifyJsPlugin({
-//      // minify時でもソースマップを利用する
-//      sourceMap: true
-//    })
+    new webpack.optimize.UglifyJsPlugin({
+      // minify時でもソースマップを利用する
+      sourceMap: true
+    })
   ],
   // ソースマップを有効に
   devtool: 'source-map'

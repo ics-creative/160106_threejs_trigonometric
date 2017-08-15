@@ -76,6 +76,7 @@ function createEarth() {
  * @param {number} latitude
  * @param {number} longitude
  * @returns {THREE.Mesh} 球
+ * @see https://ics.media/entry/10657
  */
 function createPoint(color, latitude = 0, longitude = 0) {
   // 球
@@ -92,6 +93,7 @@ function createPoint(color, latitude = 0, longitude = 0) {
  * @param {THREE.Vector3} startPoint 開始点
  * @param {THREE.Vector3} endPoint 終了点
  * @returns {THREE.Line} 線
+ * @see https://ics.media/entry/10657
  */
 function createLine(startPoint, endPoint) {
   // 線
@@ -108,6 +110,7 @@ function createLine(startPoint, endPoint) {
  * @param {number} longitude 経度
  * @param {number} radius 半径
  * @returns {THREE.Vector3} 位置
+ * @see https://ics.media/entry/10657
  */
 function translateGeoCoords(latitude, longitude, radius) {
   // 仰角
@@ -128,6 +131,7 @@ function translateGeoCoords(latitude, longitude, radius) {
  * @param {THREE.Vector3} endPos 終了点
  * @param {number} segmentNum 頂点の数 (線のなめらかさ)
  * @returns {THREE.Vector3[]} 軌跡座標の配列
+ * @see https://ics.media/entry/10657
  */
 function getOrbitPoints(startPos, endPos, segmentNum) {
   // 頂点を格納する配列

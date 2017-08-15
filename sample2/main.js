@@ -100,6 +100,7 @@ function createPoint(color, latitude = 0, longitude = 0) {
  * @param {number} longitude 経度
  * @param {number} radius 半径
  * @returns {THREE.Vector3} 位置
+ * @see https://ics.media/entry/10657
  */
 function translateGeoCoords(latitude, longitude, radius) {
   // 仰角

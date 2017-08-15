@@ -1,7 +1,7 @@
 import * as THREE from 'three';
-import {Earth} from './objects/Earth';
-import {CityPoint} from './objects/CityPoint';
-import {CityLine} from './objects/CityLine';
+import Earth from './objects/Earth';
+import CityPoint from './objects/CityPoint';
+import CityLine from './objects/CityLine';
 import TrackballControls from 'three-trackballcontrols';
 
 window.addEventListener('load', () => {
@@ -10,8 +10,10 @@ window.addEventListener('load', () => {
 
 
 /**
- * Three.jsを用いた三角関数モーションのクラスです。
+ * Three.jsを用いた三角関数デモのクラスです。
+ *
  * @author ICS
+ * @see https://ics.media/entry/10657
  */
 export class Main {
 

@@ -1,10 +1,12 @@
 import * as THREE from 'three';
 
 /**
- * 地球クラス
+ * 地球の表示クラスです。
+ *
  * @author ICS
+ * @see https://ics.media/entry/10657
  */
-export class Earth extends THREE.Group {
+export default class Earth extends THREE.Group {
 
   /** 球 **/
   public ground: THREE.Mesh;

@@ -1,11 +1,13 @@
 import * as THREE from 'three';
-import {GeoUtil} from '../utils/GeoUtil';
+import GeoUtil from '../utils/GeoUtil';
 
 /**
  * 都市の3Dポイントの表示クラスです。
+ *
  * @author ICS
+ * @see https://ics.media/entry/10657
  */
-export class CityPoint extends THREE.Group {
+export default class CityPoint extends THREE.Group {
 
   /** 地球からポイントまでの距離 */
   private _radius: number = 110;
