@@ -1,7 +1,7 @@
 import * as THREE from 'three';
-import {Earth} from './Earth';
-import {Point} from './Point';
-import {Line} from './Line';
+import {Earth} from './objects/Earth';
+import {CityPoint} from './objects/CityPoint';
+import {CityLine} from './objects/CityLine';
 import TrackballControls from 'three-trackballcontrols';
 
 window.addEventListener('load', () => {
@@ -10,8 +10,8 @@ window.addEventListener('load', () => {
 
 
 /**
- * Three,jsを用いた三角関数モーションのクラスです。
- * @author Takayoshi Sawada
+ * Three.jsを用いた三角関数モーションのクラスです。
+ * @author ICS
  */
 export class Main {
 
@@ -30,11 +30,11 @@ export class Main {
   public earth: Earth;
 
   /** 日本 **/
-  public japan: Point;
+  public japan: CityPoint;
 
   /** 主要都市一覧 **/
-  public cities: Point[]    = [];
-  public citiesLine: Line[] = [];
+  public cities: CityPoint[]    = [];
+  public citiesLine: CityLine[] = [];
 
   /** 主要都市緯度経度一覧 **/
   public citiesPoints: number[][] = [
@@ -49,7 +49,7 @@ export class Main {
   ];
 
   /** 人工衛星 **/
-  public satellite: Point;
+  public satellite: CityPoint;
 
 
   constructor() {
@@ -69,7 +69,7 @@ export class Main {
 
     // カメラ
     this.camera = new THREE.PerspectiveCamera(
-      45, window.innerWidth / window.innerHeight, 1, 2000
+        45, window.innerWidth / window.innerHeight, 1, 2000
     );
     this.camera.position.set(-250, 0, -250);
     this.camera.lookAt(new THREE.Vector3(0, 0, 0));
@@ -77,24 +77,23 @@ export class Main {
     // レンダラー
     this.renderer = new THREE.WebGLRenderer({antialias: true});
     this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.renderer.setPixelRatio(window.devicePixelRatio);
     this.renderer.setClearColor(0x000000, 1);
     this.renderer.shadowMap.enabled = true;
     this.containerElement.appendChild(this.renderer.domElement);
 
     // カメラコントローラー
-    console.log(TrackballControls)
-    console.log(THREE.TrackballControls)
     this.controller             = new TrackballControls(this.camera, this.renderer.domElement);
     this.controller.noPan       = true;
     this.controller.minDistance = 200;
     this.controller.maxDistance = 1000;
 
     // 環境光
-    let ambientLight: THREE.AmbientLight = new THREE.AmbientLight(0x111111);
+    const ambientLight = new THREE.AmbientLight(0x111111);
     this.scene.add(ambientLight);
 
     // スポットライト
-    let spotLight: THREE.SpotLight = new THREE.SpotLight(0xffffff);
+    const spotLight = new THREE.SpotLight(0xffffff);
     spotLight.position.set(-10000, 0, 0);
     spotLight.castShadow = true;//影
     this.scene.add(spotLight);
@@ -104,17 +103,17 @@ export class Main {
     this.scene.add(this.earth);
 
     // 背景
-    let geometry2: THREE.SphereGeometry = new THREE.SphereGeometry(1000, 60, 40);
+    const geometry2 = new THREE.SphereGeometry(1000, 60, 40);
     geometry2.scale(-1, 1, 1);
-    let material2: THREE.MeshBasicMaterial = new THREE.MeshBasicMaterial({
-      map: new THREE.TextureLoader().load('img/star.jpg')
+    const material2 = new THREE.MeshBasicMaterial({
+      map: new THREE.TextureLoader().load('images/star.jpg')
     });
 
-    let background: THREE.Mesh = new THREE.Mesh(geometry2, material2);
+    const background = new THREE.Mesh(geometry2, material2);
     this.scene.add(background);
 
     // 日本
-    this.japan = new Point(0xFFFF00);
+    this.japan = new CityPoint(0xFFFF00);
     this.japan.setLatitude(35.658651);
     this.japan.setLongitude(139.742689);
     this.scene.add(this.japan);
@@ -122,20 +121,20 @@ export class Main {
     // 主要都市をプロットして線を引く
     this.citiesPoints.forEach(point => {
       // 都市
-      let place: Point = new Point(0xFF00FF);
+      const place: CityPoint = new CityPoint(0xFF00FF);
       place.setLatitude(point[0]);
       place.setLongitude(point[1]);
       this.cities.push(place);
       this.scene.add(place);
 
       // 線を引く
-      let line: Line = new Line(this.japan, place);
+      const line: CityLine = new CityLine(this.japan, place);
       this.citiesLine.push(line);
       this.scene.add(line);
     });
 
     // 赤道上衛星3
-    this.satellite = new Point(0xFF0000);
+    this.satellite = new CityPoint(0xFF0000);
     this.scene.add(this.satellite);
 
     // フレーム毎のレンダーを登録
@@ -161,10 +160,16 @@ export class Main {
     this.japan.update();
 
     // 主要都市を更新
-    for (let index = 0; index < this.cities.length; index++) {
-      this.cities[index].update();
+    this.cities.map((city, index) => {
+      city.update();
       this.citiesLine[index].update();
-    }
+    });
+
+    // 主要都市を更新
+    this.citiesLine.map((cityLine, index) => {
+      cityLine.update();
+    });
+
 
     // 人工衛星を更新
     this.satellite.update();

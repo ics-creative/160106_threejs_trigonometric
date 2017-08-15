@@ -1,13 +1,20 @@
 import * as THREE from 'three';
-import {Util} from './Util';
+import {GeoUtil} from '../utils/GeoUtil';
 
 /**
- * ポイントクラス
+ * 都市の3Dポイントの表示クラスです。
+ * @author ICS
  */
-export class Point extends THREE.Group {
+export class CityPoint extends THREE.Group {
 
   /** 地球からポイントまでの距離 */
   private _radius: number = 110;
+
+  /** 球 */
+  public sphere: THREE.Mesh;
+
+  /** 点光源 */
+  public pointLight: THREE.PointLight;
 
   /** 地球からポイントまでの距離を取得 */
   public getRadius(): number {
@@ -52,11 +59,6 @@ export class Point extends THREE.Group {
   }
 
 
-  /** 球 */
-  public sphere: THREE.Mesh;
-  /** 点光源 */
-  public pointLight: THREE.PointLight;
-
   /**
    * コンストラクタ
    * @param color ポイントの色
@@ -65,10 +67,11 @@ export class Point extends THREE.Group {
     super();
 
     // 球
-    let geometry2: THREE.SphereGeometry      = new THREE.SphereGeometry(2, 35, 35);
-    let material2: THREE.MeshLambertMaterial = new THREE.MeshLambertMaterial({color: color});
-    this.sphere                              = new THREE.Mesh(geometry2, material2);
-    this.sphere.receiveShadow                = true;
+    const geometry2 = new THREE.SphereGeometry(2, 35, 35);
+    const material2 = new THREE.MeshLambertMaterial({color: color});
+
+    this.sphere               = new THREE.Mesh(geometry2, material2);
+    this.sphere.receiveShadow = true;
     this.add(this.sphere);
 
     // 点光源
@@ -80,7 +83,7 @@ export class Point extends THREE.Group {
    * 更新
    */
   public update() {
-    let position: THREE.Vector3 = Util.translateGeoCoords(this._latitude, this._longitude, this._radius);
+    const position: THREE.Vector3 = GeoUtil.translateGeoCoords(this._latitude, this._longitude, this._radius);
     this.position.copy(position);
   }
 }

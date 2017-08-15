@@ -2,7 +2,7 @@ const webpack = require('webpack');
 
 module.exports = {
   // メインとなるJavaScriptファイル（エントリーポイント）
-  entry: './src/demo.ts',
+  entry: './src/Main.ts',
   // ファイルの出力設定
   output: {
     //  出力ファイルのディレクトリ名

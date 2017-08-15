@@ -70,24 +70,24 @@
 "use strict";
 /* unused harmony export WebGLRenderTargetCube */
 /* unused harmony export WebGLRenderTarget */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "t", function() { return WebGLRenderer; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "s", function() { return WebGLRenderer; });
 /* unused harmony export ShaderLib */
 /* unused harmony export UniformsLib */
 /* unused harmony export UniformsUtils */
 /* unused harmony export ShaderChunk */
 /* unused harmony export FogExp2 */
 /* unused harmony export Fog */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "o", function() { return Scene; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "n", function() { return Scene; });
 /* unused harmony export LensFlare */
 /* unused harmony export Sprite */
 /* unused harmony export LOD */
 /* unused harmony export SkinnedMesh */
 /* unused harmony export Skeleton */
 /* unused harmony export Bone */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return Mesh; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return Mesh; });
 /* unused harmony export LineSegments */
 /* unused harmony export LineLoop */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return Line; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return Line; });
 /* unused harmony export Points */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return Group; });
 /* unused harmony export VideoTexture */
@@ -100,7 +100,7 @@
 /* unused harmony export CompressedTextureLoader */
 /* unused harmony export DataTextureLoader */
 /* unused harmony export CubeTextureLoader */
-/* unused harmony export TextureLoader */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "q", function() { return TextureLoader; });
 /* unused harmony export ObjectLoader */
 /* unused harmony export MaterialLoader */
 /* unused harmony export BufferGeometryLoader */
@@ -114,8 +114,8 @@
 /* unused harmony export Cache */
 /* unused harmony export AudioLoader */
 /* unused harmony export SpotLightShadow */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "q", function() { return SpotLight; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "m", function() { return PointLight; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "p", function() { return SpotLight; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "l", function() { return PointLight; });
 /* unused harmony export RectAreaLight */
 /* unused harmony export HemisphereLight */
 /* unused harmony export DirectionalLightShadow */
@@ -124,7 +124,7 @@
 /* unused harmony export LightShadow */
 /* unused harmony export Light */
 /* unused harmony export StereoCamera */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "l", function() { return PerspectiveCamera; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return PerspectiveCamera; });
 /* unused harmony export OrthographicCamera */
 /* unused harmony export CubeCamera */
 /* unused harmony export ArrayCamera */
@@ -182,9 +182,9 @@
 /* unused harmony export Line3 */
 /* unused harmony export Euler */
 /* unused harmony export Vector4 */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "s", function() { return Vector3; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "r", function() { return Vector3; });
 /* unused harmony export Vector2 */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "n", function() { return Quaternion; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "m", function() { return Quaternion; });
 /* unused harmony export Color */
 /* unused harmony export MorphBlendMesh */
 /* unused harmony export ImmediateRenderObject */
@@ -241,7 +241,7 @@
 /* unused harmony export TorusBufferGeometry */
 /* unused harmony export TextGeometry */
 /* unused harmony export TextBufferGeometry */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "p", function() { return SphereGeometry; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "o", function() { return SphereGeometry; });
 /* unused harmony export SphereBufferGeometry */
 /* unused harmony export RingGeometry */
 /* unused harmony export RingBufferGeometry */
@@ -269,14 +269,14 @@
 /* unused harmony export PointsMaterial */
 /* unused harmony export MeshPhysicalMaterial */
 /* unused harmony export MeshStandardMaterial */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return MeshPhongMaterial; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return MeshPhongMaterial; });
 /* unused harmony export MeshToonMaterial */
 /* unused harmony export MeshNormalMaterial */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return MeshLambertMaterial; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return MeshLambertMaterial; });
 /* unused harmony export MeshDepthMaterial */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return MeshBasicMaterial; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return MeshBasicMaterial; });
 /* unused harmony export LineDashedMaterial */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return LineBasicMaterial; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return LineBasicMaterial; });
 /* unused harmony export Material */
 /* unused harmony export Float64BufferAttribute */
 /* unused harmony export Float32BufferAttribute */
@@ -445,7 +445,7 @@
 /* unused harmony export XHRLoader */
 /* unused harmony export BinaryTextureLoader */
 /* unused harmony export GeometryUtils */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return ImageUtils; });
+/* unused harmony export ImageUtils */
 /* unused harmony export Projector */
 /* unused harmony export CanvasRenderer */
 // Polyfills
@@ -44178,45 +44178,52 @@ function CanvasRenderer() {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(0);
 
-class Util {
+/**
+ * 地球の緯度経度などの計算に利用するユーティリティクラスです。
+ * @author ICS
+ */
+class GeoUtil {
     constructor() {
+        throw new Error();
     }
     /**
-     * 緯度経度から位置を算出
-     * @param {number} latitude 緯度
-     * @param {number} longitude 経度
-     * @param {number} radius 半径
+     * 緯度経度から位置を算出します。
+     * @param {number} latitude 緯度です。
+     * @param {number} longitude 経度です。
+     * @param {number} radius 半径です。
+     * @returns {Vector3} 3Dの座標です。
      */
     static translateGeoCoords(latitude, longitude, radius) {
         // 仰角
-        let phi = (latitude) * Math.PI / 180;
+        const phi = (latitude) * Math.PI / 180;
         // 方位角
-        let theta = (longitude - 180) * Math.PI / 180;
-        let x = -(radius) * Math.cos(phi) * Math.cos(theta);
-        let y = (radius) * Math.sin(phi);
-        let z = (radius) * Math.cos(phi) * Math.sin(theta);
-        return new __WEBPACK_IMPORTED_MODULE_0_three__["s" /* Vector3 */](x, y, z);
+        const theta = (longitude - 180) * Math.PI / 180;
+        const x = -(radius) * Math.cos(phi) * Math.cos(theta);
+        const y = (radius) * Math.sin(phi);
+        const z = (radius) * Math.cos(phi) * Math.sin(theta);
+        return new __WEBPACK_IMPORTED_MODULE_0_three__["r" /* Vector3 */](x, y, z);
     }
     /**
-     * 軌道の座標を配列で返します
-     * @param startPos 開始点
-     * @param endPos 終了点
-     * @param segmentNum セグメント分割数
+     * 軌道の座標を配列で返します。
+     * @param {Vector3} startPos 開始点です。
+     * @param {Vector3} endPos 終了点です。
+     * @param {number} segmentNum セグメント分割数です。
+     * @returns {Vector3[]} 3Dの座標の配列です。
      */
     static getOrbitPoints(startPos, endPos, segmentNum = 100) {
         // 頂点を格納する配列
-        let vertices = [];
-        let startVec = startPos.clone();
-        let endVec = endPos.clone();
+        const vertices = [];
+        const startVec = startPos.clone();
+        const endVec = endPos.clone();
         // ２つのベクトルの回転軸
-        let axis = startVec.clone().cross(endVec);
+        const axis = startVec.clone().cross(endVec);
         axis.normalize();
         // ２つのベクトルが織りなす角度
-        let angle = startVec.angleTo(endVec);
+        const angle = startVec.angleTo(endVec);
         // ２つの衛星を結ぶ弧を描くための頂点を打つ
         for (let i = 0; i < segmentNum; i++) {
             // axisを軸としたクォータニオンを生成
-            let q = new __WEBPACK_IMPORTED_MODULE_0_three__["n" /* Quaternion */]();
+            const q = new __WEBPACK_IMPORTED_MODULE_0_three__["m" /* Quaternion */]();
             q.setFromAxisAngle(axis, angle / segmentNum * i);
             // ベクトルを回転させる
             vertices.push(startVec.clone().applyQuaternion(q));
@@ -44226,7 +44233,7 @@ class Util {
         return vertices;
     }
 }
-/* harmony export (immutable) */ __webpack_exports__["a"] = Util;
+/* harmony export (immutable) */ __webpack_exports__["a"] = GeoUtil;
 
 
 
@@ -44237,9 +44244,9 @@ class Util {
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Earth__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Point__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Line__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__objects_Earth__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__objects_CityPoint__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__objects_CityLine__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_three_trackballcontrols__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_three_trackballcontrols___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_three_trackballcontrols__);
 
@@ -44251,8 +44258,8 @@ window.addEventListener('load', () => {
     new Main();
 });
 /**
- * Three,jsを用いた三角関数モーションのクラスです。
- * @author Takayoshi Sawada
+ * Three.jsを用いた三角関数モーションのクラスです。
+ * @author ICS
  */
 class Main {
     constructor() {
@@ -44279,63 +44286,62 @@ class Main {
         this.containerElement = document.createElement('div');
         document.body.appendChild(this.containerElement);
         // シーン
-        this.scene = new __WEBPACK_IMPORTED_MODULE_0_three__["o" /* Scene */]();
+        this.scene = new __WEBPACK_IMPORTED_MODULE_0_three__["n" /* Scene */]();
         // カメラ
-        this.camera = new __WEBPACK_IMPORTED_MODULE_0_three__["l" /* PerspectiveCamera */](45, window.innerWidth / window.innerHeight, 1, 2000);
+        this.camera = new __WEBPACK_IMPORTED_MODULE_0_three__["k" /* PerspectiveCamera */](45, window.innerWidth / window.innerHeight, 1, 2000);
         this.camera.position.set(-250, 0, -250);
-        this.camera.lookAt(new __WEBPACK_IMPORTED_MODULE_0_three__["s" /* Vector3 */](0, 0, 0));
+        this.camera.lookAt(new __WEBPACK_IMPORTED_MODULE_0_three__["r" /* Vector3 */](0, 0, 0));
         // レンダラー
-        this.renderer = new __WEBPACK_IMPORTED_MODULE_0_three__["t" /* WebGLRenderer */]({ antialias: true });
+        this.renderer = new __WEBPACK_IMPORTED_MODULE_0_three__["s" /* WebGLRenderer */]({ antialias: true });
         this.renderer.setSize(window.innerWidth, window.innerHeight);
+        this.renderer.setPixelRatio(window.devicePixelRatio);
         this.renderer.setClearColor(0x000000, 1);
         this.renderer.shadowMap.enabled = true;
         this.containerElement.appendChild(this.renderer.domElement);
         // カメラコントローラー
-        console.log(__WEBPACK_IMPORTED_MODULE_4_three_trackballcontrols___default.a);
-        console.log(__WEBPACK_IMPORTED_MODULE_0_three__["TrackballControls"]);
         this.controller = new __WEBPACK_IMPORTED_MODULE_4_three_trackballcontrols___default.a(this.camera, this.renderer.domElement);
         this.controller.noPan = true;
         this.controller.minDistance = 200;
         this.controller.maxDistance = 1000;
         // 環境光
-        let ambientLight = new __WEBPACK_IMPORTED_MODULE_0_three__["b" /* AmbientLight */](0x111111);
+        const ambientLight = new __WEBPACK_IMPORTED_MODULE_0_three__["b" /* AmbientLight */](0x111111);
         this.scene.add(ambientLight);
         // スポットライト
-        let spotLight = new __WEBPACK_IMPORTED_MODULE_0_three__["q" /* SpotLight */](0xffffff);
+        const spotLight = new __WEBPACK_IMPORTED_MODULE_0_three__["p" /* SpotLight */](0xffffff);
         spotLight.position.set(-10000, 0, 0);
         spotLight.castShadow = true; //影
         this.scene.add(spotLight);
         // 地球
-        this.earth = new __WEBPACK_IMPORTED_MODULE_1__Earth__["a" /* Earth */]();
+        this.earth = new __WEBPACK_IMPORTED_MODULE_1__objects_Earth__["a" /* Earth */]();
         this.scene.add(this.earth);
         // 背景
-        let geometry2 = new __WEBPACK_IMPORTED_MODULE_0_three__["p" /* SphereGeometry */](1000, 60, 40);
+        const geometry2 = new __WEBPACK_IMPORTED_MODULE_0_three__["o" /* SphereGeometry */](1000, 60, 40);
         geometry2.scale(-1, 1, 1);
-        let material2 = new __WEBPACK_IMPORTED_MODULE_0_three__["i" /* MeshBasicMaterial */]({
-            map: __WEBPACK_IMPORTED_MODULE_0_three__["e" /* ImageUtils */].loadTexture('img/star.jpg')
+        const material2 = new __WEBPACK_IMPORTED_MODULE_0_three__["h" /* MeshBasicMaterial */]({
+            map: new __WEBPACK_IMPORTED_MODULE_0_three__["q" /* TextureLoader */]().load('images/star.jpg')
         });
-        let background = new __WEBPACK_IMPORTED_MODULE_0_three__["h" /* Mesh */](geometry2, material2);
+        const background = new __WEBPACK_IMPORTED_MODULE_0_three__["g" /* Mesh */](geometry2, material2);
         this.scene.add(background);
         // 日本
-        this.japan = new __WEBPACK_IMPORTED_MODULE_2__Point__["a" /* Point */](0xFFFF00);
+        this.japan = new __WEBPACK_IMPORTED_MODULE_2__objects_CityPoint__["a" /* CityPoint */](0xFFFF00);
         this.japan.setLatitude(35.658651);
         this.japan.setLongitude(139.742689);
         this.scene.add(this.japan);
         // 主要都市をプロットして線を引く
         this.citiesPoints.forEach(point => {
             // 都市
-            let place = new __WEBPACK_IMPORTED_MODULE_2__Point__["a" /* Point */](0xFF00FF);
+            const place = new __WEBPACK_IMPORTED_MODULE_2__objects_CityPoint__["a" /* CityPoint */](0xFF00FF);
             place.setLatitude(point[0]);
             place.setLongitude(point[1]);
             this.cities.push(place);
             this.scene.add(place);
             // 線を引く
-            let line = new __WEBPACK_IMPORTED_MODULE_3__Line__["a" /* Line */](this.japan, place);
+            const line = new __WEBPACK_IMPORTED_MODULE_3__objects_CityLine__["a" /* CityLine */](this.japan, place);
             this.citiesLine.push(line);
             this.scene.add(line);
         });
         // 赤道上衛星3
-        this.satellite = new __WEBPACK_IMPORTED_MODULE_2__Point__["a" /* Point */](0xFF0000);
+        this.satellite = new __WEBPACK_IMPORTED_MODULE_2__objects_CityPoint__["a" /* CityPoint */](0xFF0000);
         this.scene.add(this.satellite);
         // フレーム毎のレンダーを登録
         this.render();
@@ -44354,10 +44360,14 @@ class Main {
         // 日本を更新
         this.japan.update();
         // 主要都市を更新
-        for (let index = 0; index < this.cities.length; index++) {
-            this.cities[index].update();
+        this.cities.map((city, index) => {
+            city.update();
             this.citiesLine[index].update();
-        }
+        });
+        // 主要都市を更新
+        this.citiesLine.map((cityLine, index) => {
+            cityLine.update();
+        });
         // 人工衛星を更新
         this.satellite.update();
         // カメラコントローラーの更新
@@ -44378,6 +44388,7 @@ class Main {
 
 /**
  * 地球クラス
+ * @author ICS
  */
 class Earth extends __WEBPACK_IMPORTED_MODULE_0_three__["d" /* Group */] {
     /**
@@ -44385,31 +44396,31 @@ class Earth extends __WEBPACK_IMPORTED_MODULE_0_three__["d" /* Group */] {
      */
     constructor() {
         super();
-        // 球
-        let groundGeometry = new __WEBPACK_IMPORTED_MODULE_0_three__["p" /* SphereGeometry */](100, 35, 35);
-        let groundTexture = __WEBPACK_IMPORTED_MODULE_0_three__["e" /* ImageUtils */].loadTexture('img/ground.jpg');
-        let groundBump = __WEBPACK_IMPORTED_MODULE_0_three__["e" /* ImageUtils */].loadTexture('img/bump.jpg');
-        let specular = __WEBPACK_IMPORTED_MODULE_0_three__["e" /* ImageUtils */].loadTexture('img/specular.png');
-        let groundMaterial = new __WEBPACK_IMPORTED_MODULE_0_three__["k" /* MeshPhongMaterial */]({
-            map: groundTexture,
-            bumpMap: groundBump,
-            bumpScale: 0.5,
-            specularMap: specular
-        });
-        this.ground = new __WEBPACK_IMPORTED_MODULE_0_three__["h" /* Mesh */](groundGeometry, groundMaterial);
-        this.ground.receiveShadow = true;
-        this.add(this.ground);
-        // 雲
-        let cloudGeometry = new __WEBPACK_IMPORTED_MODULE_0_three__["p" /* SphereGeometry */](102, 35, 35);
-        let cloudTexture = __WEBPACK_IMPORTED_MODULE_0_three__["e" /* ImageUtils */].loadTexture('img/cloud.jpg');
-        let cloudMaterial = new __WEBPACK_IMPORTED_MODULE_0_three__["k" /* MeshPhongMaterial */]({
-            map: cloudTexture,
-            transparent: true,
-            blending: __WEBPACK_IMPORTED_MODULE_0_three__["a" /* AdditiveBlending */]
-        });
-        this.cloud = new __WEBPACK_IMPORTED_MODULE_0_three__["h" /* Mesh */](cloudGeometry, cloudMaterial);
-        this.cloud.castShadow = true;
-        this.add(this.cloud);
+        {
+            // 地球の球体
+            const geometry = new __WEBPACK_IMPORTED_MODULE_0_three__["o" /* SphereGeometry */](100, 60, 60);
+            const material = new __WEBPACK_IMPORTED_MODULE_0_three__["j" /* MeshPhongMaterial */]({
+                map: new __WEBPACK_IMPORTED_MODULE_0_three__["q" /* TextureLoader */]().load('images/ground.jpg'),
+                bumpMap: new __WEBPACK_IMPORTED_MODULE_0_three__["q" /* TextureLoader */]().load('images/bump.jpg'),
+                bumpScale: 1.0,
+                specularMap: new __WEBPACK_IMPORTED_MODULE_0_three__["q" /* TextureLoader */]().load('images/specular.png')
+            });
+            this.ground = new __WEBPACK_IMPORTED_MODULE_0_three__["g" /* Mesh */](geometry, material);
+            this.ground.receiveShadow = true;
+            this.add(this.ground);
+        }
+        {
+            // 雲
+            const geometry = new __WEBPACK_IMPORTED_MODULE_0_three__["o" /* SphereGeometry */](102, 60, 60);
+            const material = new __WEBPACK_IMPORTED_MODULE_0_three__["j" /* MeshPhongMaterial */]({
+                map: new __WEBPACK_IMPORTED_MODULE_0_three__["q" /* TextureLoader */]().load('images/cloud.jpg'),
+                transparent: true,
+                blending: __WEBPACK_IMPORTED_MODULE_0_three__["a" /* AdditiveBlending */]
+            });
+            this.cloud = new __WEBPACK_IMPORTED_MODULE_0_three__["g" /* Mesh */](geometry, material);
+            this.cloud.castShadow = true;
+            this.add(this.cloud);
+        }
     }
     /**
      * 更新
@@ -44428,13 +44439,14 @@ class Earth extends __WEBPACK_IMPORTED_MODULE_0_three__["d" /* Group */] {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Util__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_GeoUtil__ = __webpack_require__(1);
 
 
 /**
- * ポイントクラス
+ * 都市の3Dポイントの表示クラスです。
+ * @author ICS
  */
-class Point extends __WEBPACK_IMPORTED_MODULE_0_three__["d" /* Group */] {
+class CityPoint extends __WEBPACK_IMPORTED_MODULE_0_three__["d" /* Group */] {
     /**
      * コンストラクタ
      * @param color ポイントの色
@@ -44448,13 +44460,13 @@ class Point extends __WEBPACK_IMPORTED_MODULE_0_three__["d" /* Group */] {
         /** 経度 */
         this._longitude = 0;
         // 球
-        let geometry2 = new __WEBPACK_IMPORTED_MODULE_0_three__["p" /* SphereGeometry */](2, 35, 35);
-        let material2 = new __WEBPACK_IMPORTED_MODULE_0_three__["j" /* MeshLambertMaterial */]({ color: color });
-        this.sphere = new __WEBPACK_IMPORTED_MODULE_0_three__["h" /* Mesh */](geometry2, material2);
+        const geometry2 = new __WEBPACK_IMPORTED_MODULE_0_three__["o" /* SphereGeometry */](2, 35, 35);
+        const material2 = new __WEBPACK_IMPORTED_MODULE_0_three__["i" /* MeshLambertMaterial */]({ color: color });
+        this.sphere = new __WEBPACK_IMPORTED_MODULE_0_three__["g" /* Mesh */](geometry2, material2);
         this.sphere.receiveShadow = true;
         this.add(this.sphere);
         // 点光源
-        this.pointLight = new __WEBPACK_IMPORTED_MODULE_0_three__["m" /* PointLight */](color, 2, 0);
+        this.pointLight = new __WEBPACK_IMPORTED_MODULE_0_three__["l" /* PointLight */](color, 2, 0);
         this.add(this.pointLight);
     }
     /** 地球からポイントまでの距離を取得 */
@@ -44491,11 +44503,11 @@ class Point extends __WEBPACK_IMPORTED_MODULE_0_three__["d" /* Group */] {
      * 更新
      */
     update() {
-        let position = __WEBPACK_IMPORTED_MODULE_1__Util__["a" /* Util */].translateGeoCoords(this._latitude, this._longitude, this._radius);
+        const position = __WEBPACK_IMPORTED_MODULE_1__utils_GeoUtil__["a" /* GeoUtil */].translateGeoCoords(this._latitude, this._longitude, this._radius);
         this.position.copy(position);
     }
 }
-/* harmony export (immutable) */ __webpack_exports__["a"] = Point;
+/* harmony export (immutable) */ __webpack_exports__["a"] = CityPoint;
 
 
 
@@ -44505,24 +44517,24 @@ class Point extends __WEBPACK_IMPORTED_MODULE_0_three__["d" /* Group */] {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_three__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Util__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_GeoUtil__ = __webpack_require__(1);
 
 
 /**
  * ポイントを結ぶ線分クラス
  */
-class Line extends __WEBPACK_IMPORTED_MODULE_0_three__["d" /* Group */] {
+class CityLine extends __WEBPACK_IMPORTED_MODULE_0_three__["d" /* Group */] {
     /**
      * コンストラクタ
-     * @param startTarget 1個目の衛生
-     * @param endTarget 2個目の衛生
+     * @param {CityPoint} _startTarget 始点となる衛星
+     * @param {CityPoint} _endTarget 終点となる衛星
      */
-    constructor(startTarget, endTarget) {
+    constructor(_startTarget, _endTarget) {
         super();
-        this._startTarget = startTarget;
-        this._endTarget = endTarget;
+        this._startTarget = _startTarget;
+        this._endTarget = _endTarget;
         this._geometry = new __WEBPACK_IMPORTED_MODULE_0_three__["c" /* Geometry */]();
-        this._line = new __WEBPACK_IMPORTED_MODULE_0_three__["f" /* Line */](this._geometry, new __WEBPACK_IMPORTED_MODULE_0_three__["g" /* LineBasicMaterial */]({
+        this._line = new __WEBPACK_IMPORTED_MODULE_0_three__["e" /* Line */](this._geometry, new __WEBPACK_IMPORTED_MODULE_0_three__["f" /* LineBasicMaterial */]({
             linewidth: 2,
             color: 0x00FFFF,
             transparent: true,
@@ -44536,10 +44548,10 @@ class Line extends __WEBPACK_IMPORTED_MODULE_0_three__["d" /* Group */] {
     update() {
         // 頂点を更新することをフレーム毎に伝える
         this._geometry.verticesNeedUpdate = true;
-        this._geometry.vertices = __WEBPACK_IMPORTED_MODULE_1__Util__["a" /* Util */].getOrbitPoints(this._startTarget.position, this._endTarget.position);
+        this._geometry.vertices = __WEBPACK_IMPORTED_MODULE_1__utils_GeoUtil__["a" /* GeoUtil */].getOrbitPoints(this._startTarget.position, this._endTarget.position);
     }
 }
-/* harmony export (immutable) */ __webpack_exports__["a"] = Line;
+/* harmony export (immutable) */ __webpack_exports__["a"] = CityLine;
 
 
 
