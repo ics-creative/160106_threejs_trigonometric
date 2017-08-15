@@ -1,55 +1,42 @@
-///<reference path="../../typings/tsd.d.ts" />
-
 window.addEventListener('load', init);
 
 function init() {
-
   // 主要都市緯度経度一覧
   const citiesPoints = [
-    [51.2838, 0],   // イギリス
-    [39, -116],      // 北京
-    [34, 118],     // ロサンゼルス
-    [-33, 151],    // シドニー
-    [-23, -46],      // サンパウロ
-    [1, 103],       // シンガポール
-    [90, 0],       // 北極
-    [-90, 0],       // 南極
+    [51.2838, 0],
+    [39, -116],
+    [34, 118],
+    [-33, 151],
+    [-23, -46],
+    [1, 103],
+    [90, 0],
+    [-90, 0],
   ];
-
   // シーン
   const scene = new THREE.Scene();
-
   // カメラ
-  const camera = new THREE.PerspectiveCamera(
-    45, window.innerWidth / window.innerHeight, 1, 2000
-  );
+  const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 2000);
   camera.position.set(-250, 0, -250);
   camera.lookAt(new THREE.Vector3(0, 0, 0));
-
   // レンダラー
   const renderer = new THREE.WebGLRenderer({antialias: true});
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
-
   // カメラコントローラー
-  const controller       = new THREE.TrackballControls(camera, renderer.domElement);
-  controller.noPan       = true;
+  const controller = new THREE.TrackballControls(camera, renderer.domElement);
+  controller.noPan = true;
   controller.minDistance = 200;
   controller.maxDistance = 1000;
-
   // 地球
   const earth = createEarth();
   scene.add(earth);
-
   // 日本
   const japan = createPoint(0xff0000, 35, 139);
   scene.add(japan);
-
   // リスト分のポイントをプロット
   for (let i = 0; i < citiesPoints.length; i++) {
-    const latitude: number  = citiesPoints[i][0];
-    const longitude: number = citiesPoints[i][1];
-
+    const latitude = citiesPoints[i][0];
+    const longitude = citiesPoints[i][1];
     // ポイント
     const point = createPoint(latitude == 90 ? 0x0000FF : 0x00FF00, latitude, longitude);
     scene.add(point);
@@ -57,35 +44,27 @@ function init() {
     const line = createLine(japan.position, point.position);
     scene.add(line);
   }
-
   // フレーム毎のレンダーを登録
   tick();
 
   function tick() {
     requestAnimationFrame(tick);
-
     // カメラコントローラーの更新
     controller.update();
-
     renderer.render(scene, camera);
   }
 }
-
 
 /**
  * 地球を生成します
  * @returns {THREE.Mesh} 球
  */
-function createEarth(): THREE.Mesh {
+function createEarth() {
   // 球
   const texture = THREE.ImageUtils.loadTexture('img/ground.jpg');
-  const mesh    = new THREE.Mesh(
-    new THREE.SphereGeometry(100, 20, 20),
-    new THREE.MeshBasicMaterial({map: texture}));
-
+  const mesh = new THREE.Mesh(new THREE.SphereGeometry(100, 20, 20), new THREE.MeshBasicMaterial({map: texture}));
   return mesh;
 }
-
 
 /**
  * プロットする点を生成します
@@ -94,18 +73,13 @@ function createEarth(): THREE.Mesh {
  * @param {number} longitude
  * @returns {THREE.Mesh} 球
  */
-function createPoint(color: number, latitude: number = 0, longitude: number = 0): THREE.Mesh {
+function createPoint(color, latitude = 0, longitude = 0) {
   // 球
-  const sphere = new THREE.Mesh(
-    new THREE.SphereGeometry(2),
-    new THREE.MeshBasicMaterial({color: color}));
-
+  const sphere = new THREE.Mesh(new THREE.SphereGeometry(2), new THREE.MeshBasicMaterial({color: color}));
   // 緯度経度から位置を設定
   sphere.position.copy(translateGeoCoords(latitude, longitude, 102));
-
   return sphere;
 }
-
 
 /**
  * 二点を結ぶラインを生成します
@@ -113,16 +87,13 @@ function createPoint(color: number, latitude: number = 0, longitude: number = 0)
  * @param {THREE.Vector3} endPoint 終了点
  * @returns {THREE.Line} 線
  */
-function createLine(startPoint: THREE.Vector3, endPoint: THREE.Vector3): THREE.Line {
+function createLine(startPoint, endPoint) {
   // 線
-  const geometry    = new THREE.Geometry();
+  const geometry = new THREE.Geometry();
   geometry.vertices = getOrbitPoints(startPoint, endPoint, 15);
-
   const line = new THREE.Line(geometry, new THREE.LineBasicMaterial({linewidth: 5, color: 0x00ffff}));
-
   return line;
 }
-
 
 /**
  * 緯度経度から位置を算出します
@@ -131,19 +102,16 @@ function createLine(startPoint: THREE.Vector3, endPoint: THREE.Vector3): THREE.L
  * @param {number} radius 半径
  * @returns {THREE.Vector3} 位置
  */
-function translateGeoCoords(latitude: number, longitude: number, radius: number): THREE.Vector3 {
+function translateGeoCoords(latitude, longitude, radius) {
   // 仰角
-  const phi   = (latitude) * Math.PI / 180;
+  const phi = (latitude) * Math.PI / 180;
   // 方位角
   const theta = (longitude - 180) * Math.PI / 180;
-
   const x = -(radius) * Math.cos(phi) * Math.cos(theta);
   const y = (radius) * Math.sin(phi);
   const z = (radius) * Math.cos(phi) * Math.sin(theta);
-
   return new THREE.Vector3(x, y, z);
 }
-
 
 /**
  * 軌道の座標を配列で返します
@@ -152,21 +120,17 @@ function translateGeoCoords(latitude: number, longitude: number, radius: number)
  * @param {number} segmentNum 頂点の数 (線のなめらかさ)
  * @returns {THREE.Vector3[]} 軌跡座標の配列
  */
-function getOrbitPoints(startPos: THREE.Vector3, endPos: THREE.Vector3, segmentNum: number): THREE.Vector3[] {
+function getOrbitPoints(startPos, endPos, segmentNum) {
   // 頂点を格納する配列
   const vertices = [];
-
   const startVec = startPos.clone();
-  const endVec   = endPos.clone();
-
+  const endVec = endPos.clone();
   // ２つのベクトルの回転軸
   const axis = startVec.clone().cross(endVec);
   // 軸ベクトルを単位ベクトルに
   axis.normalize();
-
   // ２つのベクトルが織りなす角度
   const angle = startVec.angleTo(endVec);
-
   // ２つの点を結ぶ弧を描くための頂点を打つ
   for (let i = 0; i < segmentNum; i++) {
     // axisを軸としたクォータニオンを生成
@@ -178,6 +142,6 @@ function getOrbitPoints(startPos: THREE.Vector3, endPos: THREE.Vector3, segmentN
   }
   // 終了点を追加
   vertices.push(endVec);
-
   return vertices;
 }
+
