@@ -107,7 +107,7 @@ export class Main {
     let geometry2: THREE.SphereGeometry = new THREE.SphereGeometry(1000, 60, 40);
     geometry2.scale(-1, 1, 1);
     let material2: THREE.MeshBasicMaterial = new THREE.MeshBasicMaterial({
-      map: THREE.ImageUtils.loadTexture('img/star.jpg')
+      map: new THREE.TextureLoader().load('img/star.jpg')
     });
 
     let background: THREE.Mesh = new THREE.Mesh(geometry2, material2);
