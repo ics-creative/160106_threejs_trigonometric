@@ -15,33 +15,45 @@ function init() {
     [90, 0],
     [-90, 0],
   ];
+
   // シーン
   const scene = new THREE.Scene();
+
   // カメラ
   const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 2000);
   camera.position.set(-250, 0, -250);
   camera.lookAt(new THREE.Vector3(0, 0, 0));
+
   // レンダラー
   const renderer = new THREE.WebGLRenderer({antialias: true});
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
+
   // カメラコントローラー
   const controller = new THREE.TrackballControls(camera, renderer.domElement);
   controller.noPan = true;
   controller.minDistance = 200;
   controller.maxDistance = 1000;
+
   // 地球
   const earth = createEarth();
   scene.add(earth);
+
   // リスト分のポイントをプロット
   for (let i = 0; i < citiesPoints.length; i++) {
     const latitude = citiesPoints[i][0];
     const longitude = citiesPoints[i][1];
     // ポイント
-    const point = createPoint(i == 0 ? 0xff0000 : latitude == 90 ? 0x0000FF : 0x00FF00, latitude, longitude);
+    const point = createPoint(
+      i === 0
+        ? 0xff0000
+        : (latitude === 90 ? 0x0000FF : 0x00FF00),
+      latitude,
+      longitude);
     scene.add(point);
     cities.push(point);
   }
+
   // フレーム毎のレンダーを登録
   tick();
 
@@ -59,9 +71,10 @@ function init() {
  */
 function createEarth() {
   // 球
-  const texture = THREE.ImageUtils.loadTexture('img/ground.jpg');
-  const mesh = new THREE.Mesh(new THREE.SphereGeometry(100, 20, 20), new THREE.MeshBasicMaterial({map: texture}));
-  return mesh;
+  const texture = new THREE.TextureLoader().load('img/ground.jpg');
+  return new THREE.Mesh(
+    new THREE.SphereGeometry(100, 40, 40),
+    new THREE.MeshBasicMaterial({map: texture}));
 }
 
 /**
@@ -73,7 +86,9 @@ function createEarth() {
  */
 function createPoint(color, latitude = 0, longitude = 0) {
   // 球
-  const sphere = new THREE.Mesh(new THREE.SphereGeometry(2), new THREE.MeshBasicMaterial({color: color}));
+  const sphere = new THREE.Mesh(
+    new THREE.SphereGeometry(2),
+    new THREE.MeshBasicMaterial({color: color}));
   // 緯度経度から位置を設定
   sphere.position.copy(translateGeoCoords(latitude, longitude, 100));
   return sphere;
@@ -91,8 +106,10 @@ function translateGeoCoords(latitude, longitude, radius) {
   const phi = (latitude) * Math.PI / 180;
   // 方位角
   const theta = (longitude - 180) * Math.PI / 180;
+
   const x = -(radius) * Math.cos(phi) * Math.cos(theta);
   const y = (radius) * Math.sin(phi);
   const z = (radius) * Math.cos(phi) * Math.sin(theta);
+
   return new THREE.Vector3(x, y, z);
 }

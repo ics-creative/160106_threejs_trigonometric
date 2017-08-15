@@ -38,7 +38,10 @@ function init() {
     const latitude = citiesPoints[i][0];
     const longitude = citiesPoints[i][1];
     // ポイント
-    const point = createPoint(latitude == 90 ? 0x0000FF : 0x00FF00, latitude, longitude);
+    const point = createPoint(
+      latitude === 90 ? 0x0000FF : 0x00FF00,
+      latitude,
+      longitude);
     scene.add(point);
     // 線
     const line = createLine(japan.position, point.position);
@@ -61,9 +64,10 @@ function init() {
  */
 function createEarth() {
   // 球
-  const texture = THREE.ImageUtils.loadTexture('img/ground.jpg');
-  const mesh = new THREE.Mesh(new THREE.SphereGeometry(100, 20, 20), new THREE.MeshBasicMaterial({map: texture}));
-  return mesh;
+  const texture = new THREE.TextureLoader.load('img/ground.jpg');
+  return new THREE.Mesh(
+    new THREE.SphereGeometry(100, 40, 40),
+    new THREE.MeshBasicMaterial({map: texture}));
 }
 
 /**
@@ -75,7 +79,9 @@ function createEarth() {
  */
 function createPoint(color, latitude = 0, longitude = 0) {
   // 球
-  const sphere = new THREE.Mesh(new THREE.SphereGeometry(2), new THREE.MeshBasicMaterial({color: color}));
+  const sphere = new THREE.Mesh(
+    new THREE.SphereGeometry(2),
+    new THREE.MeshBasicMaterial({color: color}));
   // 緯度経度から位置を設定
   sphere.position.copy(translateGeoCoords(latitude, longitude, 102));
   return sphere;
@@ -91,8 +97,9 @@ function createLine(startPoint, endPoint) {
   // 線
   const geometry = new THREE.Geometry();
   geometry.vertices = getOrbitPoints(startPoint, endPoint, 15);
-  const line = new THREE.Line(geometry, new THREE.LineBasicMaterial({linewidth: 5, color: 0x00ffff}));
-  return line;
+  return new THREE.Line(
+    geometry,
+    new THREE.LineBasicMaterial({linewidth: 5, color: 0x00ffff}));
 }
 
 /**
@@ -107,9 +114,11 @@ function translateGeoCoords(latitude, longitude, radius) {
   const phi = (latitude) * Math.PI / 180;
   // 方位角
   const theta = (longitude - 180) * Math.PI / 180;
+
   const x = -(radius) * Math.cos(phi) * Math.cos(theta);
   const y = (radius) * Math.sin(phi);
   const z = (radius) * Math.cos(phi) * Math.sin(theta);
+
   return new THREE.Vector3(x, y, z);
 }
 
@@ -125,12 +134,14 @@ function getOrbitPoints(startPos, endPos, segmentNum) {
   const vertices = [];
   const startVec = startPos.clone();
   const endVec = endPos.clone();
+
   // ２つのベクトルの回転軸
   const axis = startVec.clone().cross(endVec);
   // 軸ベクトルを単位ベクトルに
   axis.normalize();
   // ２つのベクトルが織りなす角度
   const angle = startVec.angleTo(endVec);
+
   // ２つの点を結ぶ弧を描くための頂点を打つ
   for (let i = 0; i < segmentNum; i++) {
     // axisを軸としたクォータニオンを生成
@@ -140,6 +151,7 @@ function getOrbitPoints(startPos, endPos, segmentNum) {
     const vertex = startVec.clone().applyQuaternion(q);
     vertices.push(vertex);
   }
+
   // 終了点を追加
   vertices.push(endVec);
   return vertices;
