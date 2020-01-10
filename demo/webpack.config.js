@@ -1,6 +1,10 @@
 const webpack = require('webpack');
 
 module.exports = {
+  // モード値を production に設定すると最適化された状態で、
+  // development に設定するとソースマップ有効でJSファイルが出力される
+  mode: 'development',
+
   // メインとなるJavaScriptファイル（エントリーポイント）
   entry: './src/Main.ts',
   // ファイルの出力設定
@@ -8,7 +12,7 @@ module.exports = {
     //  出力ファイルのディレクトリ名
     path: `${__dirname}/build`,
     // 出力ファイル名
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
   module: {
     rules: [
@@ -16,39 +20,19 @@ module.exports = {
         // 拡張子 .ts の場合
         test: /\.ts$/,
         // TypeScript をコンパイルする
-        use: 'awesome-typescript-loader'
+        use: 'ts-loader',
       },
-      // ソースマップファイルの処理
-      {
-        enforce: 'pre',
-        test: /\.js$/,
-        loader: 'source-map-loader'
-      }
-    ]
+    ],
   },
+
   // import 文で .ts ファイルを解決するため
   resolve: {
-    extensions: [
-      '.ts', '.js', '.json'
-    ],
+    extensions: ['.ts', '.js', 'json'],
   },
   // ローカル開発用環境を立ち上げる
   // ブラウザで http://localhost:8081/ でアクセスできるようになる
   devServer: {
     contentBase: 'build',
-    port: 8081
+    port: 8081,
   },
-
-
-  plugins: [
-    new webpack.optimize.ModuleConcatenationPlugin(),
-
-    // JSファイルのminifyを実行する
-    new webpack.optimize.UglifyJsPlugin({
-      // minify時でもソースマップを利用する
-      sourceMap: true
-    })
-  ],
-  // ソースマップを有効に
-  devtool: 'source-map'
 };
