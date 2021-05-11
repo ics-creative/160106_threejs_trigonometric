@@ -19,7 +19,7 @@ export class GeoUtil {
    * @param {number} latitude 緯度です。
    * @param {number} longitude 経度です。
    * @param {number} radius 半径です。
-   * @returns {Vector3} 3Dの座標です。
+   * @returns {THREE.Vector3} 3Dの座標です。
    */
   static translateGeoCoords(
     latitude: number,
@@ -40,10 +40,10 @@ export class GeoUtil {
 
   /**
    * 軌道の座標を配列で返します。
-   * @param {Vector3} startPos 開始点です。
-   * @param {Vector3} endPos 終了点です。
+   * @param {THREE.Vector3} startPos 開始点です。
+   * @param {THREE.Vector3} endPos 終了点です。
    * @param {number} segmentNum セグメント分割数です。
-   * @returns {Vector3[]} 3Dの座標の配列です。
+   * @returns {THREE.Vector3[]} 3Dの座標の配列です。
    */
   static getOrbitPoints(
     startPos: THREE.Vector3,

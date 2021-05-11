@@ -3,8 +3,9 @@ import { Earth } from "./objects/Earth";
 import { CityPoint } from "./objects/CityPoint";
 import { CityLine } from "./objects/CityLine";
 import { TrackballControls } from "three/examples/jsm/controls/TrackballControls";
+import { applyGpsPosition } from "./utils/applyGpsPosition";
 
-window.addEventListener("DOMContentLoaded", () => {
+addEventListener("DOMContentLoaded", () => {
   new Main();
 });
 
@@ -37,7 +38,7 @@ export class Main {
   citiesLine: CityLine[] = [];
 
   /** 主要都市緯度経度一覧 **/
-  citiesPoints: number[][] = [
+  citiesPoints: [number, number][] = [
     [51.2838, 0], // イギリス
     [39, -116], // 北京
     [34, 118], // ロサンゼルス
@@ -61,7 +62,7 @@ export class Main {
     // カメラ
     this.camera = new THREE.PerspectiveCamera(
       45,
-      window.innerWidth / window.innerHeight,
+      innerWidth / innerHeight,
       1,
       2000
     );
@@ -69,9 +70,11 @@ export class Main {
     this.camera.lookAt(new THREE.Vector3(0, 0, 0));
 
     // レンダラー
-    this.renderer = new THREE.WebGLRenderer({ antialias: true });
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
-    this.renderer.setPixelRatio(window.devicePixelRatio);
+    this.renderer = new THREE.WebGLRenderer({
+      antialias: devicePixelRatio === 1,
+    });
+    this.renderer.setSize(innerWidth, innerHeight);
+    this.renderer.setPixelRatio(devicePixelRatio);
     this.renderer.setClearColor(0x000000, 1);
     this.renderer.shadowMap.enabled = true;
     this.containerElement.appendChild(this.renderer.domElement);
@@ -84,6 +87,7 @@ export class Main {
     this.controller.noPan = true;
     this.controller.minDistance = 200;
     this.controller.maxDistance = 1000;
+    this.controller.dynamicDampingFactor = 0.05;
 
     // 環境光
     const ambientLight = new THREE.AmbientLight(0x111111);
@@ -110,68 +114,69 @@ export class Main {
     this.scene.add(background);
 
     // 日本
-    this.japan = new CityPoint(0xffff00);
-    this.japan.setLatitude(35.658651);
-    this.japan.setLongitude(139.742689);
+    this.japan = new CityPoint(0xffff00, [35.658651, 139.742689]);
+    // 日本を更新
+    applyGpsPosition(this.japan, this.japan.getCoords());
     this.scene.add(this.japan);
 
     // 主要都市をプロットして線を引く
     this.citiesPoints.forEach((point) => {
       // 都市
-      const place: CityPoint = new CityPoint(0xff00ff);
-      place.setLatitude(point[0]);
-      place.setLongitude(point[1]);
-      this.cities.push(place);
-      this.scene.add(place);
+      const city = new CityPoint(0xff00ff, point);
+      this.cities.push(city);
+      this.scene.add(city);
+      applyGpsPosition(city, city.getCoords());
 
       // 線を引く
-      const line: CityLine = new CityLine(this.japan, place);
+      const line = new CityLine(this.japan, city);
+      line.update();
       this.citiesLine.push(line);
       this.scene.add(line);
     });
 
     // 赤道上衛星3
-    this.satellite = new CityPoint(0xff0000);
+    this.satellite = new CityPoint(0xff0000, [0, 0]);
     this.scene.add(this.satellite);
 
     // フレーム毎のレンダーを登録
     this.render();
+
+    window.addEventListener("resize", () => {
+      this.onResize();
+    });
   }
 
   /**
    * フレーム毎にさせる処理
    */
   render() {
-    requestAnimationFrame(() => {
-      this.render();
-    });
-
-    // 公転させる
-    this.satellite.setLongitude(this.satellite.getLongitude() + 1);
-
     // 地球を更新
     this.earth.update();
 
-    // 日本を更新
-    this.japan.update();
-
-    // 主要都市を更新
-    this.cities.map((city, index) => {
-      city.update();
-      this.citiesLine[index].update();
-    });
-
-    // 主要都市を更新
-    this.citiesLine.map((cityLine, index) => {
-      cityLine.update();
-    });
-
-    // 人工衛星を更新
-    this.satellite.update();
+    // 人工衛星の位置を移動
+    this.satellite.longitude = Date.now() / 100;
+    applyGpsPosition(this.satellite, this.satellite.getCoords());
 
     // カメラコントローラーの更新
     this.controller.update();
 
     this.renderer.render(this.scene, this.camera);
+    requestAnimationFrame(() => {
+      this.render();
+    });
+  }
+
+  onResize() {
+    // サイズを取得
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    // レンダラーのサイズを調整する
+    this.renderer.setPixelRatio(window.devicePixelRatio);
+    this.renderer.setSize(width, height);
+
+    // カメラのアスペクト比を正す
+    this.camera.aspect = width / height;
+    this.camera.updateProjectionMatrix();
   }
 }

@@ -8,9 +8,9 @@ import * as THREE from "three";
  */
 export class Earth extends THREE.Group {
   /** 球 **/
-  public ground: THREE.Mesh;
+  ground: THREE.Mesh;
   /** 雲 **/
-  public cloud: THREE.Mesh;
+  cloud: THREE.Mesh;
 
   /**
    * コンストラクタ
@@ -51,7 +51,7 @@ export class Earth extends THREE.Group {
   /**
    * 更新
    */
-  public update() {
+  update() {
     this.cloud.rotation.y += 0.0005;
   }
 }
