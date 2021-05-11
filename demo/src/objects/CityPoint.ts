@@ -36,8 +36,8 @@ export class CityPoint extends THREE.Group {
    * 緯度を設定
    * @param {number} latitude 緯度
    */
-  public setLatitude(latitube: number) {
-    this._latitude = latitube;
+  public setLatitude(latitude: number) {
+    this._latitude = latitude;
   }
 
   /** 経度 */

@@ -1,6 +1,6 @@
 # Three.js graphics created with trigonometric functions
 
-ICS MEDIA記事「[WebGL開発に役立つ重要な三角関数の数式・概念まとめ (Three.js編)](https://ics.media/entry/10657)」にて解説しています。
+ICS MEDIAの記事「[WebGL開発に役立つ重要な三角関数の数式・概念まとめ (Three.js編)](https://ics.media/entry/10657)」にて解説しています。
 
 ## Simple Examples
 
