@@ -1,18 +1,18 @@
-window.addEventListener('load', init);
+window.addEventListener('DOMContentLoaded', init);
 
 function init() {
   // シーン
   const scene = new THREE.Scene();
 
   // カメラ
-  const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 2000);
+  const camera = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 1, 2000);
   camera.position.set(0, 0, 1000);
   camera.lookAt(new THREE.Vector3(0, 0, 0));
 
   // レンダラー
   const renderer = new THREE.WebGLRenderer({antialias: true});
-  renderer.setPixelRatio(window.devicePixelRatio);
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setPixelRatio(devicePixelRatio);
+  renderer.setSize(innerWidth, innerHeight);
   document.body.appendChild(renderer.domElement);
 
   let degree = 0; // 角度

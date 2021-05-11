@@ -1,5 +1,5 @@
-import * as THREE from 'three';
-import GeoUtil from '../utils/GeoUtil';
+import * as THREE from "three";
+import { GeoUtil } from "../utils/GeoUtil";
 
 /**
  * 都市の3Dポイントの表示クラスです。
@@ -7,8 +7,7 @@ import GeoUtil from '../utils/GeoUtil';
  * @author ICS
  * @see https://ics.media/entry/10657
  */
-export default class CityPoint extends THREE.Group {
-
+export class CityPoint extends THREE.Group {
   /** 地球からポイントまでの距離 */
   private _radius: number = 110;
 
@@ -41,7 +40,6 @@ export default class CityPoint extends THREE.Group {
     this._latitude = latitube;
   }
 
-
   /** 経度 */
   private _longitude: number = 0;
 
@@ -60,7 +58,6 @@ export default class CityPoint extends THREE.Group {
     this._longitude = longitude;
   }
 
-
   /**
    * コンストラクタ
    * @param color ポイントの色
@@ -70,9 +67,9 @@ export default class CityPoint extends THREE.Group {
 
     // 球
     const geometry2 = new THREE.SphereGeometry(2, 35, 35);
-    const material2 = new THREE.MeshLambertMaterial({color: color});
+    const material2 = new THREE.MeshLambertMaterial({ color: color });
 
-    this.sphere               = new THREE.Mesh(geometry2, material2);
+    this.sphere = new THREE.Mesh(geometry2, material2);
     this.sphere.receiveShadow = true;
     this.add(this.sphere);
 
@@ -85,7 +82,11 @@ export default class CityPoint extends THREE.Group {
    * 更新
    */
   public update() {
-    const position: THREE.Vector3 = GeoUtil.translateGeoCoords(this._latitude, this._longitude, this._radius);
+    const position: THREE.Vector3 = GeoUtil.translateGeoCoords(
+      this._latitude,
+      this._longitude,
+      this._radius
+    );
     this.position.copy(position);
   }
 }

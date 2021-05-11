@@ -1,10 +1,4 @@
-const webpack = require('webpack');
-
 module.exports = {
-  // モード値を production に設定すると最適化された状態で、
-  // development に設定するとソースマップ有効でJSファイルが出力される
-  mode: 'development',
-
   // メインとなるJavaScriptファイル（エントリーポイント）
   entry: './src/Main.ts',
   // ファイルの出力設定
@@ -34,5 +28,5 @@ module.exports = {
   devServer: {
     contentBase: 'build',
     port: 8081,
-  },
+  }
 };

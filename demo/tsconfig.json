@@ -1,15 +1,16 @@
 {
   "compilerOptions": {
     "sourceMap": true,
+    "strict": true,
     // TSはECMAScript 5に変換
-    "target": "es5",
+    "target": "ES2015",
     // TSのモジュールはES Modulesとして出力
-    "module": "es2015",
+    "module": "ES2020",
     // node_modules からライブラリを読み込む
     "moduleResolution": "node",
     "lib": [
-      "es2020",
-      "dom"
+      "ES2020",
+      "DOM"
     ]
   },
   "exclude": [

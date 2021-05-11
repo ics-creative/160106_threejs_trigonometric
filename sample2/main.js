@@ -1,5 +1,4 @@
-window.addEventListener('load', init);
-
+window.addEventListener('DOMContentLoaded', init);
 function init() {
   /** 主要都市一覧 **/
   const cities = [];
@@ -20,14 +19,14 @@ function init() {
   const scene = new THREE.Scene();
 
   // カメラ
-  const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 2000);
+  const camera = new THREE.PerspectiveCamera(45, innerWidth / innerHeight, 1, 2000);
   camera.position.set(-250, 0, -250);
   camera.lookAt(new THREE.Vector3(0, 0, 0));
 
   // レンダラー
   const renderer = new THREE.WebGLRenderer({antialias: true});
-  renderer.setPixelRatio(window.devicePixelRatio);
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setPixelRatio(devicePixelRatio);
+  renderer.setSize(innerWidth, innerHeight);
   document.body.appendChild(renderer.domElement);
 
   // カメラコントローラー
@@ -55,28 +54,29 @@ function init() {
     cities.push(point);
   }
 
-  // フレーム毎のレンダーを登録
-  tick();
 
-  function tick() {
+
+  const tick = () => {
     requestAnimationFrame(tick);
     // カメラコントローラーの更新
     controller.update();
     renderer.render(scene, camera);
-  }
+  };
+  // フレーム毎のレンダーを登録
+  tick();
 }
 
 /**
  * 地球を生成します
  * @returns {THREE.Mesh} 球
  */
-function createEarth() {
+const createEarth = () => {
   // 球
   const texture = new THREE.TextureLoader().load('img/ground.jpg');
   return new THREE.Mesh(
     new THREE.SphereGeometry(100, 40, 40),
     new THREE.MeshBasicMaterial({map: texture}));
-}
+};
 
 /**
  * プロットする点を生成します
@@ -85,7 +85,7 @@ function createEarth() {
  * @param {number} longitude
  * @returns {THREE.Mesh} 球
  */
-function createPoint(color, latitude = 0, longitude = 0) {
+const createPoint = (color, latitude = 0, longitude = 0) => {
   // 球
   const sphere = new THREE.Mesh(
     new THREE.SphereGeometry(2),
@@ -93,7 +93,7 @@ function createPoint(color, latitude = 0, longitude = 0) {
   // 緯度経度から位置を設定
   sphere.position.copy(translateGeoCoords(latitude, longitude, 100));
   return sphere;
-}
+};
 
 
 /**
@@ -104,7 +104,7 @@ function createPoint(color, latitude = 0, longitude = 0) {
  * @returns {Vector3} 3Dの座標です。
  * @see https://ics.media/entry/10657
  */
-function translateGeoCoords(latitude, longitude, radius) {
+const translateGeoCoords = (latitude, longitude, radius) => {
   // 仰角
   const phi = (latitude) * Math.PI / 180;
   // 方位角
@@ -115,4 +115,4 @@ function translateGeoCoords(latitude, longitude, radius) {
   const z = (radius) * Math.cos(phi) * Math.sin(theta);
 
   return new THREE.Vector3(x, y, z);
-}
+};
