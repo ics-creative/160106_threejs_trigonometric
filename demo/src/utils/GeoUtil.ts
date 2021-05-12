@@ -45,7 +45,7 @@ export class GeoUtil {
    * @param {number} segmentNum セグメント分割数です。
    * @returns {THREE.Vector3[]} 3Dの座標の配列です。
    */
-  static getOrbitPoints(
+  static createOrbitPoints(
     startPos: THREE.Vector3,
     endPos: THREE.Vector3,
     segmentNum: number = 100

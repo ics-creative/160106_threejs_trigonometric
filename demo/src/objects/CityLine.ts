@@ -42,7 +42,7 @@ export class CityLine extends THREE.Group {
    * 更新
    */
   public update() {
-    const points = GeoUtil.getOrbitPoints(
+    const points = GeoUtil.createOrbitPoints(
       this._startTarget.position,
       this._endTarget.position
     );

@@ -105,7 +105,7 @@ const createPoint = (color, latitude = 0, longitude = 0) => {
 const createLine = (startPoint, endPoint) => {
   // 線
   console.log(THREE.Geometry)
-  const points = getOrbitPoints(startPoint, endPoint, 15);
+  const points = createOrbitPoints(startPoint, endPoint, 15);
   const geometry = new THREE.BufferGeometry();
   geometry.setFromPoints(points)
   return new THREE.Line(
@@ -136,13 +136,14 @@ const translateGeoCoords = (latitude, longitude, radius) => {
 
 /**
  * 軌道の座標を配列で返します。
- * @param {Vector3} startPos 開始点です。
- * @param {Vector3} endPos 終了点です。
+ *
+ * @param {THREE.Vector3} startPos 開始点です。
+ * @param {THREE.Vector3} endPos 終了点です。
  * @param {number} segmentNum セグメント分割数です。
- * @returns {Vector3[]} 軌跡座標の配列です。
+ * @returns {THREE.Vector3[]} 軌跡座標の配列です。
  * @see https://ics.media/entry/10657
  */
-const getOrbitPoints = (startPos, endPos, segmentNum) => {
+const createOrbitPoints = (startPos, endPos, segmentNum) => {
   // 頂点を格納する配列
   const vertices = [];
   const startVec = startPos.clone();

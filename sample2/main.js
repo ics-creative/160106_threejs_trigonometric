@@ -1,4 +1,5 @@
 window.addEventListener('DOMContentLoaded', init);
+
 function init() {
   /** 主要都市一覧 **/
   const cities = [];
@@ -55,7 +56,6 @@ function init() {
   }
 
 
-
   const tick = () => {
     requestAnimationFrame(tick);
     // カメラコントローラーの更新
@@ -98,21 +98,21 @@ const createPoint = (color, latitude = 0, longitude = 0) => {
 
 /**
  * 緯度経度から位置を算出します。
- * @param {number} latitude 緯度です。
- * @param {number} longitude 経度です。
+ * @param {number} latitude 緯度です(単位は度数法)。
+ * @param {number} longitude 経度です(単位は度数法)。
  * @param {number} radius 半径です。
- * @returns {Vector3} 3Dの座標です。
+ * @returns {THREE.Vector3} 3Dの座標です。
  * @see https://ics.media/entry/10657
  */
 const translateGeoCoords = (latitude, longitude, radius) => {
   // 仰角
-  const phi = (latitude) * Math.PI / 180;
+  const phi = latitude * Math.PI / 180;
   // 方位角
   const theta = (longitude - 180) * Math.PI / 180;
 
-  const x = -(radius) * Math.cos(phi) * Math.cos(theta);
-  const y = (radius) * Math.sin(phi);
-  const z = (radius) * Math.cos(phi) * Math.sin(theta);
+  const x = -1 * radius * Math.cos(phi) * Math.cos(theta);
+  const y = radius * Math.sin(phi);
+  const z = radius * Math.cos(phi) * Math.sin(theta);
 
   return new THREE.Vector3(x, y, z);
 };
