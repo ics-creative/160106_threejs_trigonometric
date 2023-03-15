@@ -1,3 +1,6 @@
+import * as THREE from 'three';
+import {TrackballControls} from 'three/addons/controls/TrackballControls.js';
+
 window.addEventListener('DOMContentLoaded', init);
 
 function init() {
@@ -27,7 +30,7 @@ function init() {
   document.body.appendChild(renderer.domElement);
 
   // カメラコントローラー
-  const controller = new THREE.TrackballControls(camera, renderer.domElement);
+  const controller = new TrackballControls(camera, renderer.domElement);
   controller.noPan = true;
   controller.minDistance = 200;
   controller.maxDistance = 1000;
