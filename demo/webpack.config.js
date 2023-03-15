@@ -1,4 +1,5 @@
 module.exports = {
+  mode: "development",
   // メインとなるJavaScriptファイル（エントリーポイント）
   entry: './src/Main.ts',
   // ファイルの出力設定
@@ -26,7 +27,9 @@ module.exports = {
   // ローカル開発用環境を立ち上げる
   // ブラウザで http://localhost:8081/ でアクセスできるようになる
   devServer: {
-    contentBase: 'build',
+    static: {
+      directory: 'build'
+    },
     port: 8081,
   }
 };
