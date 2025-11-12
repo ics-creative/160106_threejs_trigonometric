@@ -20,7 +20,7 @@ export class CityLine extends THREE.Group {
    */
   constructor(
     private _startTarget: THREE.Object3D,
-    private _endTarget: THREE.Object3D
+    private _endTarget: THREE.Object3D,
   ) {
     super();
 
@@ -33,7 +33,7 @@ export class CityLine extends THREE.Group {
         color: 0x00ffff,
         transparent: true,
         opacity: 0.5,
-      })
+      }),
     );
     this.add(this._line);
   }
@@ -44,7 +44,7 @@ export class CityLine extends THREE.Group {
   public update() {
     const points = GeoUtil.createOrbitPoints(
       this._startTarget.position,
-      this._endTarget.position
+      this._endTarget.position,
     );
 
     // 頂点を更新

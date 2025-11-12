@@ -16,9 +16,6 @@ export class Earth extends THREE.Group {
   /** 雲 **/
   cloud: THREE.Mesh;
 
-  /**
-   * コンストラクタ
-   */
   constructor() {
     super();
 

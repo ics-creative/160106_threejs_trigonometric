@@ -7,9 +7,6 @@ import * as THREE from "three";
  * @see https://ics.media/entry/10657
  */
 export class GeoUtil {
-  /**
-   * @private
-   */
   constructor() {
     throw new Error();
   }
@@ -24,7 +21,7 @@ export class GeoUtil {
   static translateGeoCoords(
     latitude: number,
     longitude: number,
-    radius: number
+    radius: number,
   ): THREE.Vector3 {
     // 仰角
     const phi = (latitude * Math.PI) / 180;
@@ -48,7 +45,7 @@ export class GeoUtil {
   static createOrbitPoints(
     startPos: THREE.Vector3,
     endPos: THREE.Vector3,
-    segmentNum: number = 100
+    segmentNum: number = 100,
   ): THREE.Vector3[] {
     // 頂点を格納する配列
     const vertices: THREE.Vector3[] = [];

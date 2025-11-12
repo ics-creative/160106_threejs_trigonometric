@@ -50,7 +50,7 @@ export class CityPoint extends THREE.Group {
     this.add(this.sphere);
 
     // 点光源
-    this.pointLight = new THREE.PointLight(color, 2, 0);
+    this.pointLight = new THREE.PointLight(color, 2000);
     this.add(this.pointLight);
 
     this.latitude = coords[0];

@@ -9,12 +9,12 @@ import { Object3D } from "three";
  */
 export const applyGpsPosition = (
   object3d: Object3D,
-  coords: { latitude: number; longitude: number; radius: number }
+  coords: { latitude: number; longitude: number; radius: number },
 ): void => {
   const position = GeoUtil.translateGeoCoords(
     coords.latitude,
     coords.longitude,
-    coords.radius
+    coords.radius,
   );
   object3d.position.copy(position);
 };

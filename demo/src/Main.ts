@@ -1,8 +1,9 @@
 import * as THREE from "three";
+import { WebGPURenderer } from "three/webgpu";
 import { Earth } from "./objects/Earth";
 import { CityPoint } from "./objects/CityPoint";
 import { CityLine } from "./objects/CityLine";
-import { TrackballControls } from "three/examples/jsm/controls/TrackballControls";
+import { TrackballControls } from "three/addons/controls/TrackballControls.js";
 import { applyGpsPosition } from "./utils/applyGpsPosition";
 import "./style.css";
 import starImage from "./assets/images/star.jpg";
@@ -23,7 +24,7 @@ export class Main {
   /** カメラオブジェクト */
   camera: THREE.PerspectiveCamera;
   /** レンダラーオブジェクト */
-  renderer: THREE.WebGLRenderer;
+  renderer: WebGPURenderer;
   /** コントローラー **/
   controller: TrackballControls;
   /** HTML要素 */
@@ -66,25 +67,25 @@ export class Main {
       45,
       innerWidth / innerHeight,
       1,
-      2000
+      2000,
     );
     this.camera.position.set(-250, 0, -250);
     this.camera.lookAt(new THREE.Vector3(0, 0, 0));
 
     // レンダラー
-    this.renderer = new THREE.WebGLRenderer({
-      antialias: devicePixelRatio === 1,
-    });
+    this.renderer = new WebGPURenderer({});
+
     this.renderer.setSize(innerWidth, innerHeight);
     this.renderer.setPixelRatio(devicePixelRatio);
     this.renderer.setClearColor(0x000000, 1);
     this.renderer.shadowMap.enabled = true;
+    this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     this.containerElement.appendChild(this.renderer.domElement);
 
     // カメラコントローラー
     this.controller = new TrackballControls(
       this.camera,
-      this.renderer.domElement
+      this.renderer.domElement,
     );
     this.controller.noPan = true;
     this.controller.minDistance = 200;
@@ -92,11 +93,11 @@ export class Main {
     this.controller.dynamicDampingFactor = 0.05;
 
     // 環境光
-    const ambientLight = new THREE.AmbientLight(0x111111);
+    const ambientLight = new THREE.AmbientLight(0x111111, 6);
     this.scene.add(ambientLight);
 
     // スポットライト
-    const spotLight = new THREE.SpotLight(0xffffff);
+    const spotLight = new THREE.SpotLight(0xffffff, 100);
     spotLight.position.set(-10000, 0, 0);
     spotLight.castShadow = true; //影
     this.scene.add(spotLight);
@@ -107,9 +108,11 @@ export class Main {
 
     // 背景
     const geometry2 = new THREE.SphereGeometry(1000, 60, 40);
-    geometry2.scale(-1, 1, 1);
+    const texture = new THREE.TextureLoader().load(starImage);
+    texture.colorSpace = THREE.SRGBColorSpace;
     const material2 = new THREE.MeshBasicMaterial({
-      map: new THREE.TextureLoader().load(starImage),
+      map: texture,
+      side: THREE.BackSide,
     });
 
     const background = new THREE.Mesh(geometry2, material2);
@@ -140,12 +143,17 @@ export class Main {
     this.satellite = new CityPoint(0xff0000, [0, 0]);
     this.scene.add(this.satellite);
 
-    // フレーム毎のレンダーを登録
-    this.render();
-
     window.addEventListener("resize", () => {
       this.onResize();
     });
+
+    this.init();
+  }
+
+  async init() {
+    await this.renderer.init();
+    // フレーム毎のレンダーを登録
+    this.render();
   }
 
   /**
