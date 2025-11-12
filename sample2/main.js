@@ -77,6 +77,7 @@ function init() {
 const createEarth = () => {
   // 球
   const texture = new THREE.TextureLoader().load('img/ground.jpg');
+  texture.colorSpace = THREE.SRGBColorSpace;
   return new THREE.Mesh(
     new THREE.SphereGeometry(100, 40, 40),
     new THREE.MeshBasicMaterial({map: texture}));
