@@ -1,4 +1,8 @@
 import * as THREE from "three";
+import groundImage from "../assets/images/ground.jpg";
+import bumpImage from "../assets/images/bump.jpg";
+import specularImage from "../assets/images/specular.png";
+import cloudImage from "../assets/images/cloud.jpg";
 
 /**
  * 地球の表示クラスです。
@@ -22,10 +26,10 @@ export class Earth extends THREE.Group {
       // 地球の球体
       const geometry = new THREE.SphereGeometry(100, 60, 60);
       const material = new THREE.MeshPhongMaterial({
-        map: new THREE.TextureLoader().load("images/ground.jpg"),
-        bumpMap: new THREE.TextureLoader().load("images/bump.jpg"),
+        map: new THREE.TextureLoader().load(groundImage),
+        bumpMap: new THREE.TextureLoader().load(bumpImage),
         bumpScale: 1.0,
-        specularMap: new THREE.TextureLoader().load("images/specular.png"),
+        specularMap: new THREE.TextureLoader().load(specularImage),
       });
 
       this.ground = new THREE.Mesh(geometry, material);
@@ -37,7 +41,7 @@ export class Earth extends THREE.Group {
       // 雲
       const geometry = new THREE.SphereGeometry(102, 60, 60);
       const material = new THREE.MeshPhongMaterial({
-        map: new THREE.TextureLoader().load("images/cloud.jpg"),
+        map: new THREE.TextureLoader().load(cloudImage),
         transparent: true,
         blending: THREE.AdditiveBlending,
       });

@@ -1,18 +1,15 @@
 {
   "private": true,
   "scripts": {
-    "start": "webpack serve",
-    "build": "webpack --mode production",
-    "watch": "webpack -w",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
     "format": "prettier --write 'src/**/*.ts'"
   },
   "devDependencies": {
     "prettier": "^2.8.4",
-    "ts-loader": "^9.4.2",
     "typescript": "^4.9.5",
-    "webpack": "^5.76.1",
-    "webpack-cli": "^5.0.1",
-    "webpack-dev-server": "^4.12.0"
+    "vite": "7.2.2"
   },
   "dependencies": {
     "@types/three": "^0.149.0",

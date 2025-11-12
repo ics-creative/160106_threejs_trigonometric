@@ -4,3 +4,5 @@
 /demo/node_modules
 node_modules
 /demo/yarn.lock
+/.playwright-mcp
+.DS_Store

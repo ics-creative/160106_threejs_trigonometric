@@ -4,6 +4,8 @@ import { CityPoint } from "./objects/CityPoint";
 import { CityLine } from "./objects/CityLine";
 import { TrackballControls } from "three/examples/jsm/controls/TrackballControls";
 import { applyGpsPosition } from "./utils/applyGpsPosition";
+import "./style.css";
+import starImage from "./assets/images/star.jpg";
 
 addEventListener("DOMContentLoaded", () => {
   new Main();
@@ -107,7 +109,7 @@ export class Main {
     const geometry2 = new THREE.SphereGeometry(1000, 60, 40);
     geometry2.scale(-1, 1, 1);
     const material2 = new THREE.MeshBasicMaterial({
-      map: new THREE.TextureLoader().load("images/star.jpg"),
+      map: new THREE.TextureLoader().load(starImage),
     });
 
     const background = new THREE.Mesh(geometry2, material2);
