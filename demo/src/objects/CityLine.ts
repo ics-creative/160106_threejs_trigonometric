@@ -1,53 +1,64 @@
 import * as THREE from "three";
-import { GeoUtil } from "../utils/GeoUtil";
+import { createOrbitPoints } from "../utils/GeoUtil";
 
 /**
- * ポイントを結ぶ線分の表示クラスです。
+ * ポイントを結ぶ線分の表示関数です。
  *
  * @author ICS
  * @see https://ics.media/entry/10657
  */
-export class CityLine extends THREE.Group {
-  /** 線 **/
-  private readonly _line: THREE.Line;
 
-  private readonly _geometry: THREE.BufferGeometry;
+export interface CityLineData {
+  group: THREE.Group;
+  line: THREE.Line;
+  geometry: THREE.BufferGeometry;
+  startTarget: THREE.Object3D;
+  endTarget: THREE.Object3D;
+}
 
-  /**
-   * コンストラクタ
-   * @param {CityPoint} _startTarget 始点となる衛星
-   * @param {CityPoint} _endTarget 終点となる衛星
-   */
-  constructor(
-    private _startTarget: THREE.Object3D,
-    private _endTarget: THREE.Object3D,
-  ) {
-    super();
+/**
+ * ポイントを結ぶ線分を作成します。
+ * @param startTarget 始点となるオブジェクト
+ * @param endTarget 終点となるオブジェクト
+ * @returns CityLineData オブジェクト
+ */
+export function createCityLine(
+  startTarget: THREE.Object3D,
+  endTarget: THREE.Object3D,
+): CityLineData {
+  const group = new THREE.Group();
 
-    this._geometry = new THREE.BufferGeometry();
+  const geometry = new THREE.BufferGeometry();
 
-    this._line = new THREE.Line(
-      this._geometry,
-      new THREE.LineBasicMaterial({
-        linewidth: 2,
-        color: 0x00ffff,
-        transparent: true,
-        opacity: 0.5,
-      }),
-    );
-    this.add(this._line);
-  }
+  const line = new THREE.Line(
+    geometry,
+    new THREE.LineBasicMaterial({
+      linewidth: 2,
+      color: 0x00ffff,
+      transparent: true,
+      opacity: 0.5,
+    }),
+  );
+  group.add(line);
 
-  /**
-   * 更新
-   */
-  public update() {
-    const points = GeoUtil.createOrbitPoints(
-      this._startTarget.position,
-      this._endTarget.position,
-    );
+  return {
+    group,
+    line,
+    geometry,
+    startTarget,
+    endTarget,
+  };
+}
 
-    // 頂点を更新
-    this._geometry.setFromPoints(points);
-  }
+/**
+ * 線分を更新します。
+ */
+export function updateCityLine(cityLine: CityLineData): void {
+  const points = createOrbitPoints(
+    cityLine.startTarget.position,
+    cityLine.endTarget.position,
+  );
+
+  // 頂点を更新
+  cityLine.geometry.setFromPoints(points);
 }

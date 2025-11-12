@@ -1,59 +1,65 @@
 import * as THREE from "three";
 
 /**
- * 都市の3Dポイントの表示クラスです。
+ * 都市の3Dポイントの表示関数です。
  *
  * @author ICS
  * @see https://ics.media/entry/10657
  */
-export class CityPoint extends THREE.Group {
-  /** 球 */
+export interface CityPointData {
+  group: THREE.Group;
   sphere: THREE.Mesh;
-
-  /** 点光源 */
   pointLight: THREE.PointLight;
+  radius: number;
+  latitude: number;
+  longitude: number;
+}
 
-  /** 地球からポイントまでの距離 */
-  radius = 110;
+/**
+ * 都市の3Dポイントを作成します。
+ * @param color ポイントの色
+ * @param coords 緯度・経度
+ * @returns CityPointData オブジェクト
+ */
+export function createCityPoint(
+  color: number,
+  coords: [number, number],
+): CityPointData {
+  const group = new THREE.Group();
 
-  /** 緯度 */
-  latitude = 0;
+  // 球
+  const geometry = new THREE.SphereGeometry(2, 10, 10);
+  const material = new THREE.MeshLambertMaterial({ color });
 
-  /** 経度 */
-  longitude = 0;
+  const sphere = new THREE.Mesh(geometry, material);
+  sphere.receiveShadow = true;
+  group.add(sphere);
 
-  /**
-   * 緯度・経度・半径の情報をまとめて取得します。
-   */
-  getCoords(): { latitude: number; longitude: number; radius: number } {
-    return {
-      latitude: this.latitude,
-      longitude: this.longitude,
-      radius: this.radius,
-    };
-  }
+  // 点光源
+  const pointLight = new THREE.PointLight(color, 2000);
+  group.add(pointLight);
 
-  /**
-   * コンストラクタ
-   * @param color ポイントの色
-   * @param coords 緯度・経度
-   */
-  constructor(color: number, coords: [number, number]) {
-    super();
+  return {
+    group,
+    sphere,
+    pointLight,
+    radius: 110,
+    latitude: coords[0],
+    longitude: coords[1],
+  };
+}
 
-    // 球
-    const geometry = new THREE.SphereGeometry(2, 10, 10);
-    const material = new THREE.MeshLambertMaterial({ color });
-
-    this.sphere = new THREE.Mesh(geometry, material);
-    this.sphere.receiveShadow = true;
-    this.add(this.sphere);
-
-    // 点光源
-    this.pointLight = new THREE.PointLight(color, 2000);
-    this.add(this.pointLight);
-
-    this.latitude = coords[0];
-    this.longitude = coords[1];
-  }
+/**
+ * 緯度・経度・半径の情報をまとめて取得します。
+ */
+export function getCityPointCoords(cityPoint: CityPointData): {
+  latitude: number;
+  longitude: number;
+  radius: number;
+} {
+  return {
+    latitude: cityPoint.latitude,
+    longitude: cityPoint.longitude,
+    radius: cityPoint.radius,
+  };
 }

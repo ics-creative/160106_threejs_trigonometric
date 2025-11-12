@@ -1,4 +1,4 @@
-import { GeoUtil } from "./GeoUtil";
+import { translateGeoCoords } from "./GeoUtil";
 import { Object3D } from "three";
 
 /**
@@ -11,7 +11,7 @@ export const applyGpsPosition = (
   object3d: Object3D,
   coords: { latitude: number; longitude: number; radius: number },
 ): void => {
-  const position = GeoUtil.translateGeoCoords(
+  const position = translateGeoCoords(
     coords.latitude,
     coords.longitude,
     coords.radius,

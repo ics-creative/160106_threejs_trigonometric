@@ -5,54 +5,60 @@ import specularImage from "../assets/images/specular.png";
 import cloudImage from "../assets/images/cloud.jpg";
 
 /**
- * 地球の表示クラスです。
+ * 地球の表示関数です。
  *
  * @author ICS
  * @see https://ics.media/entry/10657
  */
-export class Earth extends THREE.Group {
-  /** 球 **/
+
+export interface EarthData {
+  group: THREE.Group;
   ground: THREE.Mesh;
-  /** 雲 **/
   cloud: THREE.Mesh;
+}
 
-  constructor() {
-    super();
+/**
+ * 地球を作成します。
+ * @returns EarthData オブジェクト
+ */
+export function createEarth(): EarthData {
+  const group = new THREE.Group();
 
-    {
-      // 地球の球体
-      const geometry = new THREE.SphereGeometry(100, 60, 60);
-      const material = new THREE.MeshPhongMaterial({
-        map: new THREE.TextureLoader().load(groundImage),
-        bumpMap: new THREE.TextureLoader().load(bumpImage),
-        bumpScale: 1.0,
-        specularMap: new THREE.TextureLoader().load(specularImage),
-      });
+  // 地球の球体
+  const groundGeometry = new THREE.SphereGeometry(100, 60, 60);
+  const groundMaterial = new THREE.MeshPhongMaterial({
+    map: new THREE.TextureLoader().load(groundImage),
+    bumpMap: new THREE.TextureLoader().load(bumpImage),
+    bumpScale: 1.0,
+    specularMap: new THREE.TextureLoader().load(specularImage),
+  });
 
-      this.ground = new THREE.Mesh(geometry, material);
-      this.ground.receiveShadow = true;
-      this.add(this.ground);
-    }
+  const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+  ground.receiveShadow = true;
+  group.add(ground);
 
-    {
-      // 雲
-      const geometry = new THREE.SphereGeometry(102, 60, 60);
-      const material = new THREE.MeshPhongMaterial({
-        map: new THREE.TextureLoader().load(cloudImage),
-        transparent: true,
-        blending: THREE.AdditiveBlending,
-      });
+  // 雲
+  const cloudGeometry = new THREE.SphereGeometry(102, 60, 60);
+  const cloudMaterial = new THREE.MeshPhongMaterial({
+    map: new THREE.TextureLoader().load(cloudImage),
+    transparent: true,
+    blending: THREE.AdditiveBlending,
+  });
 
-      this.cloud = new THREE.Mesh(geometry, material);
-      this.cloud.castShadow = true;
-      this.add(this.cloud);
-    }
-  }
+  const cloud = new THREE.Mesh(cloudGeometry, cloudMaterial);
+  cloud.castShadow = true;
+  group.add(cloud);
 
-  /**
-   * 更新
-   */
-  update() {
-    this.cloud.rotation.y += 0.0005;
-  }
+  return {
+    group,
+    ground,
+    cloud,
+  };
+}
+
+/**
+ * 地球を更新します。
+ */
+export function updateEarth(earth: EarthData): void {
+  earth.cloud.rotation.y += 0.0005;
 }
