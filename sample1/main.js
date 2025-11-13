@@ -1,8 +1,9 @@
 import * as THREE from 'three';
+import { WebGPURenderer } from 'three/webgpu';
 
 window.addEventListener('DOMContentLoaded', init);
 
-function init() {
+async function init() {
   // シーン
   const scene = new THREE.Scene();
 
@@ -12,7 +13,8 @@ function init() {
   camera.lookAt(new THREE.Vector3(0, 0, 0));
 
   // レンダラー
-  const renderer = new THREE.WebGLRenderer({antialias: true});
+  const renderer = new WebGPURenderer({antialias: true});
+  await renderer.init();
   renderer.setPixelRatio(devicePixelRatio);
   renderer.setSize(innerWidth, innerHeight);
   document.body.appendChild(renderer.domElement);

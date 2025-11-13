@@ -1,9 +1,10 @@
 import * as THREE from 'three';
 import {TrackballControls} from 'three/addons/controls/TrackballControls.js';
+import { WebGPURenderer } from 'three/webgpu';
 
 window.addEventListener('DOMContentLoaded', init);
 
-function init() {
+async function init() {
   // 主要都市緯度経度一覧
   const citiesPoints = [
     [51.2838, 0],
@@ -24,7 +25,8 @@ function init() {
   camera.lookAt(new THREE.Vector3(0, 0, 0));
 
   // レンダラー
-  const renderer = new THREE.WebGLRenderer({antialias: true});
+  const renderer = new WebGPURenderer({antialias: true});
+  await renderer.init();
   renderer.setPixelRatio(devicePixelRatio);
   renderer.setSize(innerWidth, innerHeight);
   document.body.appendChild(renderer.domElement);
